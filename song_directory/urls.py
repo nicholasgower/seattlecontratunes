@@ -13,7 +13,7 @@ md5_song_directory=uuid.UUID("dac9630aec642a428cd73f4be0a03569")
 
 app_name = "song_directory"
 urlpatterns = [
-    path("", views.Index, name="medley_redirect"),
+    path("", views.Index, name="main"),
     path("medley/", views.MedleyView.as_view(), name="medley"),
     path("medley/<int:pk>", views.MedleyIndexView.as_view(), name="medley_view"),
     path("song/", views.SongListView.as_view(), name="song_list")
