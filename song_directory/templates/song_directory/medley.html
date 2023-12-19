@@ -1,0 +1,16 @@
+
+
+
+<title> Medley List </title>
+
+<a href="../"> Return </a>
+
+{% if Medley_list %}
+    <ul>
+    {% for medley in Medley_list %}
+        <li><a href="{{medley.id}}">{{ medley.Tune1 }} , {{ medley.Tune2 }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No polls are available.</p>
+{% endif %}

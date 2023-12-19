@@ -1,0 +1,29 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Dec 18 14:32:54 2023
+
+@author: Nicholas
+"""
+import pandas as pd
+from pathlib import Path
+
+
+cols=["name","abc","description"]
+
+
+pd=pd.DataFrame()
+
+pathList=Path("song_directory\internal_scripts").rglob("*")
+
+for file in pathList:
+    print(file.suffix)
+    print(file.stem)
+    print(file.parent)
+    if ".rtf" not in file.stem:
+        text=""
+        if ".docx" in file.suffix:
+            text=""
+        elif ".abc" in file.suffix:
+            text=""
+        #if Path(file.)    
+    #if 
