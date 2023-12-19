@@ -12,12 +12,16 @@ from django.shortcuts import redirect
 
 
 class MedleyView(generic.ListView):
-    template_name = "song_directory/medley.html"
+    template_name = "song_directory/list_view.html"
     context_object_name = "Medley_list"
     
     def get_queryset(self):
         """Return 100 randomly chosen medlies"""
         return Medley.objects.filter()[:100]
+    def get_context_data(self, **kwargs):
+       context = super(MedleyView, self).get_context_data(**kwargs) # get the default context data
+       context['Title'] = "Medley List"# add extra field to the context
+       return context
     
 def Index(request):
     #return redirect("medley/")
@@ -34,4 +38,16 @@ class MedleyIndexView(generic.DetailView):
         """Return five randomly chosen medlies"""
         return Medley.objects.filter() #.order_by("-id")[:5]
     
-#def     
+class SongListView(generic.ListView):
+    template_name = "song_directory/list_view.html"
+    context_object_name = "Song_list"
+    title="Song"
+    def get_queryset(self):
+        """Return 100 randomly chosen medlies"""
+        return Song.objects.filter()[:100]
+    def get_context_data(self, **kwargs):
+       context = super(SongListView, self).get_context_data(**kwargs) # get the default context data
+       context['Title'] = "Song List"# add extra field to the context
+       return context
+   
+    

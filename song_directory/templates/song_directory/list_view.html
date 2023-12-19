@@ -2,6 +2,7 @@
 
 
 <title> {{Title}} </title>
+<a> {{Title}} <a> <br></br>
 
 <a href="../"> Return </a>
 
@@ -11,6 +12,13 @@
         <li><a href="{{medley.id}}">{{ medley.Tune1 }} , {{ medley.Tune2 }}</a></li>
     {% endfor %}
     </ul>
+
+{% elif Song_list %}
+    <ul>
+    {% for entry in Song_list %}
+        <li><a href="{{entry.id}}">{{ entry.name }}</a></li>
+    {% endfor %}
+    </ul>	
 {% else %}
-    <p>No polls are available.</p>
+    <p>The database this page references is empty.</p>
 {% endif %}
