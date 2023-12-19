@@ -46,5 +46,5 @@ class Medley(models.Model):
     additional_notes=models.CharField(max_length=4000,blank=True)
     medley_type=models.CharField(choices=medley_categories,max_length=200)
     
-    def __str__():
-        return self.Tune1
+    def __str__(self):
+        return "{}, {}, {}".format(self.Tune1,self.Tune2,self.Tune3)
