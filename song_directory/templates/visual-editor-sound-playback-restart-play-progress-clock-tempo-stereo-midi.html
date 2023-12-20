@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>visual editor sound playback restart play progress clock tempo stereo midi</title>
+<link rel="stylesheet" type="text/css" href="abcjs-audio.css"><script src="abcjs-basic-min.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+
+function load() {
+
+var options = {};
+var editor = new ABCJS.Editor("abc", {
+  canvas_id: "paper",
+  warnings_id: "warnings",
+  abcjsParams: options
+});
+document.querySelector(".activate-audio").addEventListener("click", activate);
+function activate() {    
+    if (ABCJS.synth.supportsAudio()) {
+        var controlOptions = {
+            displayRestart: true,
+            displayPlay: true,
+            displayProgress: true,
+            displayClock: true
+        };
+        var synthControl = new ABCJS.synth.SynthController();
+        synthControl.load("#audio", null, controlOptions);
+        synthControl.disable(true);
+        var midiBuffer = new ABCJS.synth.CreateSynth();
+        midiBuffer.init({
+            visualObj: visualObj[0],
+            millisecondsPerMeasure: 800,
+            midi,
+            options: {
+                pan: [-.5,.5]
+            }
+
+        }).then(function () {
+            synthControl.setTune(visualObj[0], true).then(function (response) {
+            document.querySelector(".abcjs-inline-audio").classList.remove("disabled");
+            })
+        });
+    } else {
+        console.log("audio is not supported on this browser");
+    };
+}    
+
+
+
+
+}
+</script>
+</head>
+<body onload="load()">
+<header>
+<h1>visual editor sound playback restart play progress clock tempo stereo midi</h1>
+</header>
+<div class="container">
+
+<textarea id="abc" cols="80" rows="12" spellcheck="false">X: 1
+T: Cooley's
+M: 4/4
+L: 1/8
+R: reel
+K: Emin
+|:D2|EB{c}BA B2 EB|~B2 AB dBAG|FDAD BDAD|FDAD dAFD|
+EBBA B2 EB|B2 AB defg|afe^c dBAF|DEFD E2:|
+|:gf|eB B2 efge|eB B2 gedB|A2 FA DAFA|A2 FA defg|
+eB B2 eBgB|eB B2 defg|afe^c dBAF|DEFD E2:|
+</textarea>
+
+<div id="warnings">No errors</div>
+<div id="paper"></div>
+<div id="audio"></div><button class="activate-audio">Activate Audio</button>
+<div id="midi-download"></div>
+
+
+
+</div>
+</body>
+</html>

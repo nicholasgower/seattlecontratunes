@@ -50,4 +50,19 @@ class SongListView(generic.ListView):
        context['Title'] = "Song List"# add extra field to the context
        return context
    
+class SongView(generic.DetailView):
+    model=Song
+    template_name = "song_directory/song_view.html"
+    context_object_name = "song"
+    
+    def get_queryset(self):
+        """Return five randomly chosen medlies"""
+        return Song.objects.filter() #.order_by("-id")[:5]   
+def getSongAbc(request,song_id):
+    song_object=get_object_or_404(Song, pk=song_id)
+    filename="{}.txt".format(song_object["name"])
+    response = HttpResponse(song_object["abc"], content_type="text/plain")
+    response["content-Disposition"]=filename    
+    return response
+    
     
