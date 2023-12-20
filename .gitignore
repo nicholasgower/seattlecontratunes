@@ -155,4 +155,4 @@ cython_debug/
 #
 .xlsx/
 .sqlite3
-seattlecontratunes/settings.py
+seattlecontratunes/**
