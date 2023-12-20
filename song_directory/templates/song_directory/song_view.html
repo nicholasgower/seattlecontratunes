@@ -1,11 +1,15 @@
-
-{% load static %}
-<link rel="stylesheet" href={% static 'song_directory/abcjs-audio.css'%}>
 <!doctype html>
+{% load static %}
+<link rel="stylesheet" type="text/css" media="all" href={% static 'song_directory/abcjs-audio.css' %}>
+
 <html lang="en"></html>
 <head>
     <title>  {{song.name}}   </title>
-
+    <style>
+		.abcjs-inline-audio {
+			max-width: 770px;
+		}
+	</style>
 
 </head>
 <body>
@@ -18,6 +22,7 @@
 
 
 <script type="text/javascript"> 
+    const enable_playback=true;
     var sleepSetTimeout_ctrl;
 
     function sleep(ms) {
@@ -33,12 +38,53 @@
     var visualOptions = { responsive: 'resize' };
     
     let abcString = '{{song.abc|escapejs}}';
-    abcString=abcString.replace("&quot;",'\"')
+    abcString=abcString.replace("&quot;",'\"');
     <!--alert(abcString)-->
     <!--var abcString ="X:1\nT:Example\nK:Bb\nBcde|\n";-->
     window.onload= function(){
         
-        ABCJS.renderAbc("target", abcString,{jazzchords:false});
+        var visualObj=ABCJS.renderAbc("target", abcString,{jazzchords:false});
+        if (enable_playback == true){
+            if (ABCJS.synth.supportsAudio()){
+                var synth = new ABCJS.synth.CreateSynth(options={
+                    program:3
+                });
+
+                var myContext = new AudioContext();
+                synth.init({
+                    audioContext: myContext,
+                    visualObj: visualObj[0],
+                    
+                    options: {
+                         
+                        pan: [-0.3, 0.3]
+                    }
+                }).then(function (results){
+                    synth.prime().then((response) => {
+                        console.log(response.status)
+                    });
+                }).catch(function (reason){
+                    console.log(reason)
+                });
+                var synthControl = new ABCJS.synth.SynthController();
+
+                synthControl.load("#synthController",null,{
+                    displayPlay:true,
+                    displayProgress:true,
+                    displayWarp:true,
+                    displayRestart:true,
+                    displayLoop:true
+                });
+                synthControl.setTune(visualObj[0]).then(function(){
+                    console.log("Audio successfully loaded.");
+                }).catch(function (error){
+                    console.warn("Audio problem:", error);
+                });
+            }else{
+                document.querySelector('#synthController').innerHTML = 
+                "Audio is not supported in this browser.";
+            }
+        }
     }
 </script>
 
@@ -49,11 +95,17 @@
 
 
 
-
-
+<br></br>
+<a href="{%url 'song_directory:song_abc_download' song.pk%}"> Download ABC </a>
 <div id="target"></div>
-<li> {{song.abc|linebreaks}} </li>
-<li> {{song.description}} </li> 
+<div id="synthController"></div>
+<!--<li> {{song.abc|linebreaks}} </li> 
+<a href="{%url 'song_directory:song_print' song.pk%}"> Print </a> -->
+
+{% if song.description != "" %}
+	<li> {{song.description}} </li> 
+{% endif %}
+
 </body>
 </html>
 

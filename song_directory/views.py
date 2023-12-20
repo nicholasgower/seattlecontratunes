@@ -7,6 +7,7 @@ from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
 from django.shortcuts import redirect
+from django.http import FileResponse
 
 # Create your views here.
 
@@ -20,7 +21,7 @@ class MedleyView(generic.ListView):
         return Medley.objects.filter()[:100]
     def get_context_data(self, **kwargs):
        context = super(MedleyView, self).get_context_data(**kwargs) # get the default context data
-       context['Title'] = "Medley List"# add extra field to the context
+       context['Title'] = "Medley List"# add extra field to the contexts
        return context
     
 def Index(request):
@@ -58,11 +59,13 @@ class SongView(generic.DetailView):
     def get_queryset(self):
         """Return five randomly chosen medlies"""
         return Song.objects.filter() #.order_by("-id")[:5]   
-def getSongAbc(request,song_id):
-    song_object=get_object_or_404(Song, pk=song_id)
-    filename="{}.txt".format(song_object["name"])
-    response = HttpResponse(song_object["abc"], content_type="text/plain")
-    response["content-Disposition"]=filename    
+    
+def getSongAbc(request,pk):
+    song_object=get_object_or_404(Song, pk=pk)
+    #print(song_object)
+    filename="{}.txt".format(song_object.name)
+    response = HttpResponse(song_object.abc, content_type="text/plain")
+    response["content-Disposition"]='attachment; filename={0}'.format(filename)
     return response
     
     

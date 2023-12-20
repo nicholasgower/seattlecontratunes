@@ -19,5 +19,6 @@ urlpatterns = [
     path("song/", views.SongListView.as_view(), name="song_list"),
     #path("song/",views.SongView.as_view(),name="song"),
     path("song/<int:pk>",views.SongView.as_view(),name="song_view"),
-    #path("song/<int:pk>/download/abc",views.getSongAbc,name="song_abc_download"),
+    path("song/<int:pk>/download/abc",views.getSongAbc,name="song_abc_download"),
+    path("song/<int:pk>/",views.getSongAbc,name="song_print"), #Currently unused
 ]
