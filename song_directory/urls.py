@@ -5,10 +5,10 @@
 from . import views
 from django.urls import path, include
 import uuid
-
+from functools import partial
 md5_song_directory=uuid.UUID("dac9630aec642a428cd73f4be0a03569")
 
-
+aboutText="Test"
 
 
 app_name = "song_directory"
@@ -21,4 +21,5 @@ urlpatterns = [
     path("song/<int:pk>",views.SongView.as_view(),name="song_view"),
     path("song/<int:pk>/download/abc",views.getSongAbc,name="song_abc_download"),
     path("song/<int:pk>/",views.getSongAbc,name="song_print"), #Currently unused
+    path("about/",partial(views.ViewText,text=aboutText),name="about")
 ]

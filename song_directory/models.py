@@ -31,6 +31,8 @@ class Song(models.Model):
     def was_published_recently(self):
         now=timezone.now()
         return now - datetime.timedelta(days=1) <= self.pub_date <= now
+    def is_fakebook(self):
+        pass
     
     
 class Medley(models.Model):

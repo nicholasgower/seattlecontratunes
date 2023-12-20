@@ -54,7 +54,7 @@
                     visualObj: visualObj[0],
                     
                     options: {
-                        <!--soundFontUrl: "{% static 'song_directory/Trilight_Princess(Elezeid_Fix).sf2' %}", -->
+                       
                         pan: [-0.3, 0.3],
                         fadeLength:10
                     }
@@ -78,7 +78,7 @@
                     false,
                     
                     {
-                            program: 41,
+                            program: 41
                             
                         }
                     
@@ -104,8 +104,9 @@
 
 <br></br>
 <a href="{%url 'song_directory:song_abc_download' song.pk%}"> Download ABC </a>
-<div id="target"></div>
 <div id="synthController"></div>
+<div id="target"></div>
+
 <!--<li> {{song.abc|linebreaks}} </li> 
 <a href="{%url 'song_directory:song_print' song.pk%}"> Print </a> -->
 

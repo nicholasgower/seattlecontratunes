@@ -67,5 +67,11 @@ def getSongAbc(request,pk):
     response = HttpResponse(song_object.abc, content_type="text/plain")
     response["content-Disposition"]='attachment; filename={0}'.format(filename)
     return response
+
+def ViewText(request,text):
+    template="song_directory/generic_text_display.html"
+    context={"text":text}
+    response=render(request,template,context)
+    return response
     
     
