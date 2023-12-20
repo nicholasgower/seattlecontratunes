@@ -46,9 +46,7 @@
         var visualObj=ABCJS.renderAbc("target", abcString,{jazzchords:false});
         if (enable_playback == true){
             if (ABCJS.synth.supportsAudio()){
-                var synth = new ABCJS.synth.CreateSynth(options={
-                    program:3
-                });
+                var synth = new ABCJS.synth.CreateSynth();
 
                 var myContext = new AudioContext();
                 synth.init({
@@ -56,8 +54,9 @@
                     visualObj: visualObj[0],
                     
                     options: {
-                         
-                        pan: [-0.3, 0.3]
+                        <!--soundFontUrl: "{% static 'song_directory/Trilight_Princess(Elezeid_Fix).sf2' %}", -->
+                        pan: [-0.3, 0.3],
+                        fadeLength:10
                     }
                 }).then(function (results){
                     synth.prime().then((response) => {
@@ -75,7 +74,15 @@
                     displayRestart:true,
                     displayLoop:true
                 });
-                synthControl.setTune(visualObj[0]).then(function(){
+                synthControl.setTune(visualObj[0],
+                    false,
+                    
+                    {
+                            program: 41,
+                            
+                        }
+                    
+                ).then(function(){
                     console.log("Audio successfully loaded.");
                 }).catch(function (error){
                     console.warn("Audio problem:", error);

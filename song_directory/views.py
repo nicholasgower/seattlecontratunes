@@ -63,7 +63,7 @@ class SongView(generic.DetailView):
 def getSongAbc(request,pk):
     song_object=get_object_or_404(Song, pk=pk)
     #print(song_object)
-    filename="{}.txt".format(song_object.name)
+    filename="{}.abc".format(song_object.name)
     response = HttpResponse(song_object.abc, content_type="text/plain")
     response["content-Disposition"]='attachment; filename={0}'.format(filename)
     return response
