@@ -96,19 +96,15 @@
 </script>
 
 
-
-
-
-
-
-
 <br></br>
-<a href="{%url 'song_directory:song_abc_download' song.pk%}"> Download ABC </a>
+<a> Uploaded by user {{song.uploader_name}} on {{song.uploaded_time}}</a>
+<br></br>
+<a href="{%url 'song_directory:song_abc_download' song.url_code%}"> Download ABC </a>
 <div id="synthController"></div>
 <div id="target"></div>
 
-<!--<li> {{song.abc|linebreaks}} </li> 
-<a href="{%url 'song_directory:song_print' song.pk%}"> Print </a> -->
+<!--<li> {{song.abc|linebreaks}} </li>  -->
+
 
 {% if song.description != "" %}
 	<li> {{song.description}} </li> 

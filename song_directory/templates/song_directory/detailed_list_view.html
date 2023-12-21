@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+
+<head>
+<title> {{Title}} </title>
+</head>
+<body>
+<a> {{Title}} <a> <br></br>
+
+<a href="../"> Return </a>
+
+{% if list %}
+    <ul>
+    {% for item in list %}
+        <li><a>{{item.title}}</a></li>
+        <blockquote>{{item.details}}</blockquote>
+    {% endfor %}
+    </ul>
+
+{% else %}
+    <p>The database this page references is empty.</p>
+{% endif %}
+</body>

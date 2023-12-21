@@ -25,8 +25,8 @@ SECRET_KEY = "django-insecure-%_p^1035g8fu3@!**z5s0!^s+b(!3p)qytxx$()10uu#z7#(ni
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['localhost',"192.168.56.1","192.168.1.36","75.172.27.188"]
+#ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
@@ -117,6 +117,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = "static/"
+STATIC_ROOT="C:\\Users\\Nicholas\\Documents\\seattlecontratunes_static"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

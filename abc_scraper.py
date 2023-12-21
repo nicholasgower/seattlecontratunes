@@ -9,6 +9,8 @@ from pathlib import Path
 from docx import Document
 from os.path import exists
 import sqlite3
+import datetime
+from uuid import uuid4
 def getDocxText(filename):
     doc = Document(filename)
     fullText = []
@@ -58,7 +60,10 @@ for file in pathList:
             
         print(text)
         print(description)
-        database_proto.append({"name":name,"abc":text,"description":description})
+        database_proto.append({"name":name,"abc":text,"description":description,"uploader_id":3,
+                               
+                               
+                               "uploaded_time":datetime.datetime.now().isoformat(),"url_code":str(uuid4()).replace("-","")})
 
 df=pd.DataFrame(database_proto)
 

@@ -8,11 +8,12 @@ Created on Sun Dec 17 21:53:49 2023
 import pandas
 import sqlite3
 import uuid
+from uuid import uuid4
 from datetime import datetime
 import numpy as np
 
 md5_hash=uuid.UUID("239512be226a8b7578b1578be5ee7bee") #Used to deterministically generate UUIDs
-
+default_datetime=datetime(year=1900,month=1,day=1,hour=12,minute=0,second=0)
 
 medley_categories=[
     "Contra",
@@ -46,7 +47,7 @@ medley_categories_index=0
 
 columns=pandas.read_sql("SELECT * FROM song_directory_medley LIMIT 1",db).columns
 
-database_columns=['Tune1', 'Tune2', 'Tune3', 'earliest_play', 'latest_play', 'bands', 'keys', 'comments', 'additional_notes', 'medley_type']
+database_columns=['Tune1', 'Tune2', 'Tune3', 'earliest_play_legacy', 'latest_play_legacy', 'bands', 'keys', 'notes', 'additional_notes', 'medley_type']
 spreadsheet_columns=['Tune 1', 'Tune 2', 'Tune 3  ', 'Earliest (##)', 'Latest (##)', 'Band or Bands', 'Keys', 'Comments', 'Additional Comments']
       
 
@@ -69,9 +70,16 @@ for i,row in enumerate(sheet.iloc):
         
         #new_row["id"]=uuid.uuid3(md5_hash,"{}{}{}{}{}".format(new_row["Tune1"],new_row["Tune2"],new_row["Tune3"],new_row["earliest_play"],new_row["bands"],new_row["keys"])).int >> 65
         new_row["medley_type"]=medley_categories[medley_categories_index]
-        new_row["latest_play"]=None
-        new_row["earliest_play"]=None
-        if type(new_row["latest_play"]) is str and "_" in new_row["latest_play"]:
+        new_row["latest_play"]=default_datetime
+        new_row["earliest_play"]=default_datetime
+        
+        new_row["uploaded_time"]=datetime.now().isoformat()
+        new_row["url_code"]=str(uuid4()).replace("-","")
+        new_row["uploader_id"]=3
+        
+        #new_row["latest_play_legacy"]=None
+        #new_row["earliest_play_legacy"]=None
+        """if type(new_row["latest_play"]) is str and "_" in new_row["latest_play"]:
             try:
                 early=new_row["earliest_play"].split("_")
                 year=early[0]
@@ -87,7 +95,9 @@ for i,row in enumerate(sheet.iloc):
                 new_row["latest_play"]=datetime(int(year),1,1).strftime('%Y-%m-%d %H:%M:%S')
             except ValueError:
                 pass
-        for item in ["Tune2","Tune3","additional_notes","comments","keys","bands"]:
+        """
+        
+        for item in ["Tune2","Tune3","additional_notes","notes","keys","bands","earliest_play_legacy","latest_play_legacy"]:
             if type(new_row[item]) is not str:
                 new_row[item]=""
         

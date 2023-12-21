@@ -15,11 +15,13 @@ app_name = "song_directory"
 urlpatterns = [
     path("", views.Index, name="main"),
     path("medley/", views.MedleyView.as_view(), name="medley"),
-    path("medley/<int:pk>", views.MedleyIndexView.as_view(), name="medley_view"),
+    path("medley/<slug:slug>", views.MedleyIndexView.as_view(), name="medley_view"),
     path("song/", views.SongListView.as_view(), name="song_list"),
-    #path("song/",views.SongView.as_view(),name="song"),
-    path("song/<int:pk>",views.SongView.as_view(),name="song_view"),
-    path("song/<int:pk>/download/abc",views.getSongAbc,name="song_abc_download"),
-    path("song/<int:pk>/",views.getSongAbc,name="song_print"), #Currently unused
+    path("song/",views.SongView.as_view(),name="song"),
+    #path("song/<int:pk>",views.SongView.as_view(),name="song_view"),
+    #path("song/<int:pk>/download/abc",views.getSongAbc,name="song_abc_download"),
+    path("song/<slug:slug>",views.SongView.as_view(),name="song_view"),
+    path("song/<slug:url_code>/download/abc",views.getSongAbc,name="song_abc_download"),
+    #path("song/<int:pk>/",views.getSongAbc,name="song_print"), #Currently unused
     path("about/",partial(views.ViewText,text=aboutText),name="about")
 ]

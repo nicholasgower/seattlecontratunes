@@ -1,7 +1,9 @@
+<!DOCTYPE html>
 
-
-
+<head>
 <title> {{Title}} </title>
+</head>
+<body>
 <a> {{Title}} <a> <br></br>
 
 <a href="../"> Return </a>
@@ -9,16 +11,17 @@
 {% if Medley_list %}
     <ul>
     {% for medley in Medley_list %}
-        <li><a href="{{medley.id}}">{{ medley.Tune1 }} , {{ medley.Tune2 }}</a></li>
+        <li><a href="{{medley.url_code}}">{{ medley.Tune1 }} , {{ medley.Tune2 }}</a></li>
     {% endfor %}
     </ul>
 
 {% elif Song_list %}
     <ul>
     {% for entry in Song_list %}
-        <li><a href="{{entry.id}}">{{ entry.name }}</a></li>
+        <li><a href="{{entry.url_code}}">{{ entry.name }}</a></li>
     {% endfor %}
     </ul>	
 {% else %}
     <p>The database this page references is empty.</p>
 {% endif %}
+</body>
