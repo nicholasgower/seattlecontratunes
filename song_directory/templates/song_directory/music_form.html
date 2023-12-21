@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<!-- Made with ChatGPT -->
+<!-- Prompt: Write a django html template containing a form that asks the user for a name, description, and abc-formated music notation. -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Notation Form</title>
+</head>
+<body>
+
+  <h2>Music Notation Form</h2>
+
+  <form method="post" action="{% url 'submit_music' %}">
+    {% csrf_token %}
+
+    <label for="id_name">Name:</label>
+    <input type="text" id="id_name" name="name" required>
+
+    <br>
+
+    <label for="id_description">Description:</label>
+    <textarea id="id_description" name="description" required></textarea>
+
+    <br>
+
+    <label for="id_music_notation">ABC-formatted Music Notation:</label>
+    <textarea id="id_music_notation" name="music_notation" required></textarea>
+
+    <br>
+
+    <input type="submit" value="Submit">
+  </form>
+
+</body>
+</html>

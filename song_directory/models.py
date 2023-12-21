@@ -56,7 +56,7 @@ class Song(models.Model):
     description=models.CharField(max_length=4000,blank=True)
     abc=models.CharField(max_length=4000)
     
-    uploaded_time=models.DateTimeField(default=datetime.datetime(year=2023,month=12,day=20,hour=12,minute=0,second=0))
+    uploaded_time=models.DateTimeField(default=datetime.datetime.now())
     #likes=models.IntegerField(default=0)
     uploader=models.ForeignKey(User, on_delete=models.CASCADE)
     
@@ -67,19 +67,27 @@ class Song(models.Model):
     #def was_published_recently(self):
     #    now=timezone.now()
     #    return now - datetime.timedelta(days=1) <= self.pub_date <= now
-    def is_fakebook(self):
-        pass
+    def is_fakebook(self,id):
+        self_abc=self.get(id=id).abc
+        return 
     class Meta:
         permissions=[("can_delete_own_song","Can delete songs uploaded by self")]
+    def findSongs(self,search):
+        return self.filter(name__contains=search)[0]
+    def changedClef(self,id,clef="bass"):  
+        self_abc=self.get(id=id).abc
+        clef_index=self_abc.index("\nK:")
+        next_newline=self_abc.index("\n",clef_index+1)
+        injection=" clef={}".format(clef)
+        return "".join((self_abc[:next_newline],injection,self_abc[next_newline:]))
         
-    
     
 class Medley(models.Model):
     url_code=models.UUIDField(default=uuid4)
     Tune1=models.CharField(max_length=200)
     Tune2=models.CharField(max_length=200,blank=True, default="")
     Tune3=models.CharField(max_length=200,blank=True,default="")
-    uploaded_time=models.DateTimeField(default=datetime.datetime(year=2023,month=12,day=20,hour=12,minute=0,second=0))
+    uploaded_time=models.DateTimeField(default=datetime.datetime.now())
     
     earliest_play=models.DateField(null=True,blank=True)
     latest_play=models.DateField(null=True,blank=True)

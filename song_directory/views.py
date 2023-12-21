@@ -71,6 +71,9 @@ class SongView(generic.DetailView):
        print(context)
        context["object"].uploader_name = User.objects.get(id=context["object"].uploader_id) # add extra field to the context
        return context
+   
+    
+   
 def getSongAbc(request,url_code):
     
     song_object=get_object_or_404(Song, url_code=url_code)

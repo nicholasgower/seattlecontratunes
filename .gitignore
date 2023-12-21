@@ -156,3 +156,5 @@ cython_debug/
 .xlsx/
 .sqlite3
 seattlecontratunes/**
+.docx
+
