@@ -153,8 +153,8 @@ cython_debug/
 
 
 #
-.xlsx/
+#.xlsx/
 .sqlite3
-seattlecontratunes/**
-.docx
+#seattlecontratunes/**
+#.docx
 
