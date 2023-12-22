@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class TuneDirectoryConfig(AppConfig):
+class UserApiConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
-    name = "tune_directory"
+    name = "user_api"
