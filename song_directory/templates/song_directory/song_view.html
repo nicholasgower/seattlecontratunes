@@ -110,12 +110,12 @@
     
     function changeClefButton(clef){
                 return function(){
-                    AbcString=changedClef(abcString,clef);
+                    abcString=changedClef(abcString,clef);
                     //dummyRenderer=ABCJS.renderAbc("*",abc_changed)
                     //abc_down=ABCJS.strTranspose(abc_changed,dummyRenderer,-24)
                     
                     //console.log(abc_down);
-                    renderer.changeABC(AbcString);
+                    renderer.changeABC(abcString);
                     //renderer.visualObj
                     //delete synthController.disable(true);
                     //synthController=renderMusic(abc_changed,"target","synthController");
@@ -124,11 +124,11 @@
     function transpose(delta){
             return function(){
                 
-                dummyRenderer=ABCJS.renderAbc("*",AbcString)
-                AbcString=ABCJS.strTranspose(AbcString,dummyRenderer,delta)
+                dummyRenderer=ABCJS.renderAbc("*",abcString);
+                abcString=ABCJS.strTranspose(abcString,dummyRenderer,delta);
+                dummyRenderer=null;
                     
-                    
-                renderer.changeABC(AbcString);
+                renderer.changeABC(abcString);
                     
                 };
         }    
