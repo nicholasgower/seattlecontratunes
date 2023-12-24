@@ -14,7 +14,7 @@ DMCA Compliance
 
 Search bar
 
-Automatic linking from tunes in medleys to tune pages
+~~Automatic linking from tunes in medleys to tune pages~~ **Completed 12/24/23** Not perfect, but further improvements will likely require an API.
 
 ~~Change clef button~~ **Completed 12/21/23**
 
@@ -24,4 +24,4 @@ User-uploaded tunes
 
 User-edited tunes
 
-User deletion of tunes uploaded by user
+User deletion of tunes uploaded by user (Not literal deletion, only making it hidden from users)
