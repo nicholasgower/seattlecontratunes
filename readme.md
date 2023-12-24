@@ -12,7 +12,7 @@ To run this server, define the following environmental variables:
 
 DMCA Compliance
 
-Search bar
+~~Search bar~~ **Completed 12/24/23** Only searches by name at the moment.
 
 ~~Automatic linking from tunes in medleys to tune pages~~ **Completed 12/24/23** Not perfect, but further improvements will likely require an API.
 

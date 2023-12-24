@@ -12,7 +12,7 @@
 
 
 {% if Medley_list or Song_list %}    
-<a href='{%url "song_directory:index" %}'> Return </a>
+<a href='{%url "song_directory:index" %}'>Return</a>
 {% endif %}
 
 
@@ -25,11 +25,34 @@
     </ul>
 
 {% elif Song_list %}
+    <br> </br>
+    <input type="search" id="song_search_input"> 
+    <button id="search_button">Search Tunes</button>
+
+
+
+
     <ul>
     {% for entry in Song_list %}
         <li><a href='{%url "song_directory:song_view" entry.url_code %}'>{{ entry.name }}</a></li>
     {% endfor %}
-    </ul>	
+    </ul>
+    
+    <script type="text/javascript">
+        
+        
+        document.getElementById("search_button").onclick = 
+        function(){
+                location.href = "{%url 'song_directory:song_search' %}"+"?search="+document.getElementById("song_search_input").value;
+            }
+        
+    </script>
+
+
+    
+
+
+
 {% elif Song_search %}
     <ul>
     {% for entry in Song_search %}
@@ -40,5 +63,12 @@
     <p>The database this page references is empty.</p>
 {% endif %}
 </body>
+
+
+
+
+
+
+
 
 {% endblock %}
