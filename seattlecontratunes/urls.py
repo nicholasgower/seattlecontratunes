@@ -16,16 +16,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from .views import index
+from .views import index, favicon
 
 from django.urls import include, path
 
 
 
 
+
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("",index),
+    path("",index,name="index"),
     path("api/user/",include("user_api.urls")),
     path("song_directory/", include("song_directory.urls")),
+    path("favicon.ico",favicon)
 ]

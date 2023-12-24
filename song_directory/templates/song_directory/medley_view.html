@@ -1,5 +1,7 @@
-<!DOCTYPE html>
+{% extends 'song_directory/base/base.html' %}
 {% load static %}
+
+{%block content%}
 <link rel="stylesheet" type="text/css" media="all" href="{% static 'song_directory/text_display.css' %}">
 <html lang="en"></html>
 
@@ -19,4 +21,4 @@
 
 
 <a href="../medley">Go back</a>
-
+{%endblock%}

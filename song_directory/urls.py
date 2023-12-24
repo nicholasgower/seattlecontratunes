@@ -13,7 +13,7 @@ aboutText="Test"
 
 app_name = "song_directory"
 urlpatterns = [
-    path("", views.Index, name="main"),
+    path("", views.Index, name="index"),
     path("medley/", views.MedleyView.as_view(), name="medley"),
     path("medley/<slug:slug>", views.MedleyIndexView.as_view(), name="medley_view"),
     path("song/", views.SongListView.as_view(), name="song_list"),

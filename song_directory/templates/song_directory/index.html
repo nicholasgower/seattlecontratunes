@@ -1,6 +1,9 @@
-<!DOCTYPE html>
-{% load static %}
-<link rel="stylesheet" type="text/css" media="all" href="{% static 'song_directory/text_display.css' %}">
+
+{% extends 'song_directory/base/base.html' %}
+<!--{% load static %}  -->
+
+
+{% block content %}
 <html lang="en"></html>
 
 {% if False %}
@@ -16,3 +19,4 @@
 <a href=about>About</a>
 <br></br>
 <!--<a href=changelog>Changelog</a> -->
+{% endblock %}

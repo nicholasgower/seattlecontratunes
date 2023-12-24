@@ -1,8 +1,13 @@
-<!DOCTYPE html>
-{% load static %}
-<link rel="stylesheet" type="text/css" media="all" href="{% static 'song_directory/text_display.css' %}">
-<link rel="stylesheet" type="text/css" media="all" href="{% static 'song_directory/abcjs-audio.css' %}">
+{% extends 'song_directory/base/base.html' %}
 
+
+
+
+
+
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" media="all" href="{% static 'song_directory/abcjs-audio.css' %}">
 <html lang="en"></html>
 <head>
     <title>  {{song.name}}   </title>
@@ -126,7 +131,7 @@
                 
                 dummyRenderer=ABCJS.renderAbc("*",abcString);
                 abcString=ABCJS.strTranspose(abcString,dummyRenderer,delta);
-                dummyRenderer=null;
+                dummyRenderer=null; //This line prevents a memory leak.
                     
                 renderer.changeABC(abcString);
                     
@@ -151,4 +156,4 @@
     
 </script>
 
-
+{% endblock %}

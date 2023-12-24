@@ -1,0 +1,16 @@
+.static-header {
+    position: fixed;
+    top: 0;
+    width:100%;
+    background-color: #2f00ff;
+    /* box_shadow: */
+    z-index: 1000;
+
+
+
+}
+
+.content{
+    margin-top:80px;
+
+}

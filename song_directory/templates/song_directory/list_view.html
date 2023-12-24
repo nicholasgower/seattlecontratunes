@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+{% extends 'song_directory/base/base.html' %}
+{% block content %}
 {% load static %}
 <link rel="stylesheet" type="text/css" media="all" href="{% static 'song_directory/text_display.css' %}">
 
@@ -27,3 +28,5 @@
     <p>The database this page references is empty.</p>
 {% endif %}
 </body>
+
+{% endblock %}

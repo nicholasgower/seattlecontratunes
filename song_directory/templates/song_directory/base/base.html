@@ -1,0 +1,45 @@
+<!-- base.html -->
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<link rel="stylesheet" type="text/css" media="all" href="{% static 'song_directory/header.css' %}"> 
+
+<head>
+    <meta charset ="UTF-8">
+    
+
+
+
+
+</head>
+<link rel="stylesheet" type="text/css" media="all" href="{% static 'song_directory/text_display_new.css' %}"> 
+<body>
+    <div class="static-header">
+    
+        <a href ="{% url 'song_directory:index' %}"> <h1>Contra Tunes</h1> </a>
+    
+    </div>
+    
+
+    <div class="content">
+        {% block content %}
+
+        {% endblock %}
+
+    </div>
+
+
+</body>
+
+
+
+
+
+
+
+
+
+
+
+
+</html>
