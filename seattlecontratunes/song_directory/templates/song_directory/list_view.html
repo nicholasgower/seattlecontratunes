@@ -9,7 +9,13 @@
 <body>
 <a> {{Title}} <a> <br></br>
 
-<a href="../"> Return </a>
+
+
+{% if Medley_list or Song_list %}    
+<a href='{%url "song_directory:index" %}'> Return </a>
+{% endif %}
+
+
 
 {% if Medley_list %}
     <ul>
@@ -21,9 +27,15 @@
 {% elif Song_list %}
     <ul>
     {% for entry in Song_list %}
-        <li><a href="{{entry.url_code}}">{{ entry.name }}</a></li>
+        <li><a href='{%url "song_directory:song_view" entry.url_code %}'>{{ entry.name }}</a></li>
     {% endfor %}
     </ul>	
+{% elif Song_search %}
+    <ul>
+    {% for entry in Song_search %}
+        <li><a href='{%url "song_directory:song_view" entry.url_code %}'>{{ entry.name }}</a></li>
+    {% endfor %}
+    </ul>
 {% else %}
     <p>The database this page references is empty.</p>
 {% endif %}
