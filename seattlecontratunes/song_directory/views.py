@@ -47,6 +47,8 @@ class MedleyIndexView(generic.DetailView):
        context = super(MedleyIndexView, self).get_context_data(**kwargs) # get the default context data
        context["tunes"]=[Medley.Tune1,Medley.Tune2,Medley.Tune3]
        print(context["tunes"])
+       
+       #context["Tune1_exists"]=len(Song.objects.filter(name__icontains=Song.objects.get(id=))
        context['Title'] = "Song List" # add extra field to the context
        return context
     
@@ -118,8 +120,11 @@ class SongView(generic.DetailView):
        context = super(SongView, self).get_context_data(**kwargs) # get the default context data
        #print(context)
        context["object"].uploader_name = User.objects.get(id=context["object"].uploader_id) # add extra field to the context
+       
+       
+       
        return context
-   
+       
     
    
 def getSongAbc(request,url_code):
