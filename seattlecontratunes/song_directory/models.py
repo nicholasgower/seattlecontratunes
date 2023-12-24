@@ -72,8 +72,8 @@ class Song(models.Model):
         return 
     class Meta:
         permissions=[("can_delete_own_song","Can delete songs uploaded by self")]
-    def findSongs(self,search):
-        return self.filter(name__contains=search)[0]
+    #def findSongs(search):
+    #    return super().objects.filter(name__contains=search)
     def changedClef(self,id,clef="bass"):  
         self_abc=self.get(id=id).abc
         clef_index=self_abc.index("\nK:")
@@ -106,3 +106,13 @@ class Medley(models.Model):
         return "{}, {}, {}".format(self.Tune1,self.Tune2,self.Tune3)
     class Meta:
         permissions=[("can_delete_own_medley","Can delete medleys uploaded by self")]
+    def getTuneLinks(id):
+        out=[]
+        this=Medley.objects.get(id=id)
+        for tune in [this.Tune1, this.Tune2, this.Tune3]:
+            
+            
+            links=Song.objects.filter(name__contains=tune.strip())
+            out.append(links)
+        return out
+            

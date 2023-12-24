@@ -17,11 +17,12 @@ urlpatterns = [
     path("medley/", views.MedleyView.as_view(), name="medley"),
     path("medley/<slug:slug>", views.MedleyIndexView.as_view(), name="medley_view"),
     path("song/", views.SongListView.as_view(), name="song_list"),
-    path("song/",views.SongView.as_view(),name="song"),
+    #path("song/",views.SongView.as_view(),name="song"),
     #path("song/<int:pk>",views.SongView.as_view(),name="song_view"),
     #path("song/<int:pk>/download/abc",views.getSongAbc,name="song_abc_download"),
-    path("song/<slug:slug>",views.SongView.as_view(),name="song_view"),
-    path("song/<slug:url_code>/download/abc",views.getSongAbc,name="song_abc_download"),
+    path("song/view/<slug:slug>",views.SongView.as_view(),name="song_view"),
+    path("song/view/<slug:url_code>/download/abc",views.getSongAbc,name="song_abc_download"),
+    path("song/search",views.SongSearchView.as_view(),name="song_search"),
     #path("song/<int:pk>/",views.getSongAbc,name="song_print"), #Currently unused
     path("about/",partial(views.ViewText,text=aboutText),name="about")
 ]

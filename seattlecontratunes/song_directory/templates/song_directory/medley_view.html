@@ -7,11 +7,23 @@
 
 <title>  Medley {{medley.pk}}   </title>
 
+<a href='{%url "song_directory:medley" %}'>Go back</a>
 
 
-<li> Tune 1: {{medley.Tune1}} </li>
-<li> Tune 2: {{medley.Tune2}} </li>
-<li> Tune 3: {{medley.Tune3}} </li>
+<li> Tune 1: <a href='{% url "song_directory:song_search" %}?search={{medley.Tune1}}'>{{medley.Tune1}},</a> </li>
+<li> Tune 2: <a href='{% url "song_directory:song_search" %}?search={{medley.Tune2}}'>{{medley.Tune2}},</a> </li>
+<li> Tune 3: <a href='{% url "song_directory:song_search" %}?search={{medley.Tune3}}'>{{medley.Tune3}}</a> </li>
+
+<li>
+
+
+
+
+
+
+
+</li>
+
 <li> Bands: {{medley.bands}} </li>
 <li> keys: {{medley.keys}} </li>
 <li> comments: {{medley.comments}} </li>
@@ -20,5 +32,5 @@
 
 
 
-<a href="../medley">Go back</a>
+
 {%endblock%}
