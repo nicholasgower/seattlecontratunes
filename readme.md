@@ -4,6 +4,7 @@ To run this server, define the following environmental variables:
 
 "DJANGO_SECRET_KEY" : The Django secret key
 
+"TIME_ZONE" :The time zone that the server is in (Example: America/Los_Angeles)
 
 
 ## Todo:

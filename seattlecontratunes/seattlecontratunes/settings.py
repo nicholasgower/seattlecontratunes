@@ -119,7 +119,7 @@ REST_FRAMEWORK = {
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "America/Los_Angeles"
+TIME_ZONE = os.environ["TIME_ZONE"]
 
 USE_I18N = True
 
