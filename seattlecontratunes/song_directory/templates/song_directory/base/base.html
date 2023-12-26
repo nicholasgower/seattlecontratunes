@@ -20,8 +20,16 @@
     
     </div>
     
+    
 
     <div class="content">
+        <div class="account-info">
+            {% if user.id is None %}
+            Login 
+            {% else %}
+            Logged in: {{user}} 
+            {% endif %}
+        </div> 
         {% block content %}
 
         {% endblock %}
