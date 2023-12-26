@@ -27,6 +27,10 @@ SECRET_KEY = os.environ["DJANGO_SECRET_KEY"]
 DEBUG = True
 
 ALLOWED_HOSTS = ['localhost',"192.168.56.1","192.168.1.36","75.172.27.188"]
+
+
+INTERNAL_IPS = ["localhost","127.0.0.1"]
+
 #ALLOWED_HOSTS = ["*"]
 
 # Application definition
@@ -41,9 +45,12 @@ INSTALLED_APPS = [
     "song_directory.apps.SongDirectoryConfig",
     "user_api.apps.UserApiConfig",
     "rest_framework",
+    "debug_toolbar",
 ]
 
+
 MIDDLEWARE = [
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -51,6 +58,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    
 ]
 
 ROOT_URLCONF = "seattlecontratunes.urls"
