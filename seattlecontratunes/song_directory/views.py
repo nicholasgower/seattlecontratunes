@@ -9,6 +9,7 @@ from django.utils import timezone
 from django.shortcuts import redirect
 from django.http import FileResponse
 from django.db import connection
+from .forms import SongForm
 
 from django.contrib.auth.models import User
 # Create your views here.
@@ -142,4 +143,20 @@ def ViewText(request,text):
     response=render(request,template,context)
     return response
     
-    
+
+def ask_for_song(request):
+    if request.method == "POST":
+        form =SongForm(request.POST)
+        if form.is_valid():
+            new_song=Song(name=form["name"].value(),abc=form["abc"].value(),description=form["description"].value(),uploader=request.user)
+            new_song.save()
+            print(form)
+            
+            return redirect("song_directory:song_view",slug=Song.objects.get(pk=new_song.pk).url_code)
+    else:
+        form = SongForm()
+    return render(request,"song_directory/song_form.html",{"form":form})
+            
+        
+        
+        

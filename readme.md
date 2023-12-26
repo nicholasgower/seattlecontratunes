@@ -25,7 +25,7 @@ DMCA Compliance
 
 ~~User-directed account creation~~ **Completed 12/26/23**
 
-User-uploaded tunes
+~~User-uploaded tunes~~ **Completed 12/26/2023**
 
 User-edited tunes
 

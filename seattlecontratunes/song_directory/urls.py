@@ -24,5 +24,6 @@ urlpatterns = [
     path("song/view/<slug:url_code>/download/abc",views.getSongAbc,name="song_abc_download"),
     path("song/search",views.SongSearchView.as_view(),name="song_search"),
     #path("song/<int:pk>/",views.getSongAbc,name="song_print"), #Currently unused
-    path("about/",partial(views.ViewText,text=aboutText),name="about")
+    path("about/",partial(views.ViewText,text=aboutText),name="about"),
+    path("song/upload",views.ask_for_song,name="song_upload"),
 ]

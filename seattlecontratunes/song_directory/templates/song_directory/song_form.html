@@ -1,0 +1,19 @@
+{% extends 'song_directory/base/base.html' %}
+
+{%block content%}
+<script type="text/javascript">
+    $('form').on("submit",
+    function (){
+        alert("You have now submitted your song. Redirecting you to your song.")
+    });
+
+
+</script>
+<form action="{%url 'song_directory:song_upload' %}" method="POST">
+
+    {% csrf_token %}
+    {{ form }}
+    <input id="submitButton" type="submit" value="Submit">
+
+</form>
+{% endblock %}

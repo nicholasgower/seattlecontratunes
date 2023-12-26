@@ -1,0 +1,15 @@
+{% extends 'song_directory/base/base.html' %}
+
+{%block content%}
+<form action="/submit-song/",method="post">
+
+    <label for="name",>Name</label>
+    <input id="name" type="text" name="name" maxlength="100" required>
+    <label for="abc",>Abc code</label>
+    <input id="abc" type="text" name="abc" maxlength="4000" required>
+    <label for="description",>Description</label>
+    <input id="description",type="text">
+
+
+</form>
+{% endblock %}
