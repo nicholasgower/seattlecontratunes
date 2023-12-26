@@ -31,4 +31,5 @@ urlpatterns = [
     path("song_directory/", include("song_directory.urls")),
     path("favicon.ico",favicon),
     path("__debug__/",include("debug_toolbar.urls")),
+    path("accounts/",include("allauth.urls")),
 ]

@@ -4,8 +4,13 @@ To run this server, define the following environmental variables:
 
 "DJANGO_SECRET_KEY" : The Django secret key
 
-"TIME_ZONE" :The time zone that the server is in (Example: America/Los_Angeles)
+"TIME_ZONE" : The time zone that the server is in (Example: America/Los_Angeles)
 
+"EMAIL_HOST" : The SMTP email host for the server, to send automated emails. (Example: smtp.gmail.com)
+
+"EMAIL_HOST_USER" : email username
+
+"EMAIL_HOST_PASSWORD" : email password
 
 ## Todo:
 
