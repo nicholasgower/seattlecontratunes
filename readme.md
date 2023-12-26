@@ -1,6 +1,6 @@
 ## Private Keys
 
-To run this server, define the following environmental variables:
+To run this server, define the following system environment variables:
 
 "DJANGO_SECRET_KEY" : The Django secret key
 
