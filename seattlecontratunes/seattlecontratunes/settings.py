@@ -173,15 +173,29 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# Email Server
 
-# Bottom of the file
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = os.environ["EMAIL_HOST"]
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = os.environ["EMAIL_HOST_USER"]
-EMAIL_HOST_PASSWORD = os.environ["EMAIL_HOST_PASSWORD"]
+#all_auth settings
+
+ACCOUNT_EMAIL_CONFIMRATION_EXPIRE_DAYS=1 
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+CCOUNT_LOGIN_ATTEMPTS_LIMIT = 5
+CCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 86400
+LOGIN_REDIRECT_URL = '/'
+ACCOUNT_LOGOUT_REDIRECT_URL ='/accounts/login/'
+
+useEmail=True
+if useEmail:
+    # Email Server
+    
+    # Bottom of the file
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = os.environ["EMAIL_HOST"]
+    EMAIL_PORT = 587
+    EMAIL_USE_TLS = True
+    EMAIL_HOST_USER = os.environ["EMAIL_HOST_USER"]
+    DEFAULT_FROM_EMAIL= os.environ["EMAIL_HOST_USER"]
+    EMAIL_HOST_PASSWORD = os.environ["EMAIL_HOST_PASSWORD"]
 
 
 
