@@ -18,9 +18,13 @@
     margin-top:120px;
 }
 
+
 .account-info{
     position: fixed;
-     top: 30px; 
+     top: 0px; 
+    
+     padding: 30px 0;
     right:20px;
+    
     z-index: 1001;
 }

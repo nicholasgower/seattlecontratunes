@@ -1,0 +1,9 @@
+{% extends "allauth/layouts/base.html" %}
+{%load static%}
+
+{% block body %}
+<link rel="stylesheet" type="text/css" media="all" href="{% static 'auth_override/signinup.css' %}"> 
+{% include "song_directory/base/base.html" %}
+{{ block.super }}
+
+{% endblock %}

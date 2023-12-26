@@ -1,0 +1,15 @@
+
+
+
+
+{%extends "account/login.html" %}
+{% load static %}
+
+
+
+{% block content %}
+<link rel="stylesheet" type="text/css" media="all" href="{% static 'auth_override/signinup.css' %}"> 
+{% include "song_directory/base/base.html" %}
+{{ block.super }}
+
+{% endblock %}

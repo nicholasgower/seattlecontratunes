@@ -36,6 +36,7 @@ INTERNAL_IPS = ["localhost","127.0.0.1"]
 # Application definition
 
 INSTALLED_APPS = [
+    'auth_override.apps.AuthOverrideConfig',
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -48,11 +49,13 @@ INSTALLED_APPS = [
     "rest_framework",
     
     "debug_toolbar",
+    "django_extensions",
     
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
    # 'allauth.socialaccount.providers.google',
+    
 ]
 
 AUTHENTICATION_BACKENDS = [

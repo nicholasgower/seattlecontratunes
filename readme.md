@@ -23,7 +23,7 @@ DMCA Compliance
 
 ~~Change clef button~~ **Completed 12/21/23**
 
-User-directed account creation
+~~User-directed account creation~~ **Completed 12/26/23**
 
 User-uploaded tunes
 

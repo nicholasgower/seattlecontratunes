@@ -25,9 +25,11 @@
     <div class="content">
         <div class="account-info">
             {% if user.id is None %}
-            Login 
+             <a href = '{%url "account_login" %}'>Login</a>
             {% else %}
             Logged in: {{user}} 
+            
+            <a href = '{%url "account_logout" %}'>Logout</a>
             {% endif %}
         </div> 
         {% block content %}
