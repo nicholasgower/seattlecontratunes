@@ -1,6 +1,25 @@
+# Setup Environment
+
+Python version: 3.10.13
+
+    git clone https://github.com/nicholasgower/seattlecontratunes.git
+
+    cd seattlecontratunes/seattlecontratunes
+
+    pip install --no-cache-dir -r requirements.txt
+
+    python manage.py makemigrations
+
+    python manage.py migrate
+
+    python manage.py create superuser
+
+    python manage.py runserver
+
+
 ## Private Keys
 
-To run this server, define the following system environment variables:
+Define the following system environment variables:
 
 "DJANGO_SECRET_KEY" : The Django secret key
 
@@ -12,7 +31,7 @@ To run this server, define the following system environment variables:
 
 "EMAIL_HOST_PASSWORD" : email password
 
-## Todo:
+# Todo:
 
 
 DMCA Compliance
