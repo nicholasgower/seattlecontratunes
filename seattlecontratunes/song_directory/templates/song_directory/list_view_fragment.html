@@ -1,0 +1,48 @@
+
+
+
+{% if Medley_list %}
+    <ul>
+    {% for medley in Medley_list %}
+        <li><a href="{{medley.url_code}}">{{ medley.Tune1 }} , {{ medley.Tune2 }}</a></li>
+    {% endfor %}
+    </ul>
+
+{% elif Song_list %}
+    
+
+
+    <ul>
+    {% for entry in Song_list %}
+        <li><a href='{%url "song_directory:song_view" entry.url_code %}'>{{ entry.name }}</a></li>
+    {% endfor %}
+    
+    
+    </ul>
+    <div hx-get="{%url 'song_directory:song_view_page' %}?page={{next_page}}" hx-trigger="revealed" hx-swap="outerHTML"> Get more  </div>
+    
+    
+
+    
+
+{% elif Song_search %}
+    <ul>
+    {% for entry in Song_search %}
+        <li><a href='{%url "song_directory:song_view" entry.url_code %}'>{{ entry.name }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>The database this page references is empty.</p>
+{% endif %}
+
+
+
+</body>
+
+
+
+
+
+
+
+

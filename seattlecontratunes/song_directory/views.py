@@ -11,6 +11,8 @@ from django.http import FileResponse
 from django.db import connection
 from .forms import SongForm
 
+from django.core.exceptions import PermissionDenied
+
 from django.contrib.auth.models import User
 # Create your views here.
 
@@ -66,7 +68,48 @@ class SongListView(generic.ListView):
        context = super(SongListView, self).get_context_data(**kwargs) # get the default context data
        context['Title'] = "Song List"# add extra field to the context
        return context
-   
+
+class SongListViewPart(generic.ListView):
+    template_name = "song_directory/list_view_fragment.html"
+    
+    context_object_name = "Song_list"
+    title="Song"
+    def get_queryset(self):
+        
+        if "page" not in self.kwargs.keys():    
+            page=0
+        else:
+            page=self.kwargs['page']-1
+        print(self.kwargs)
+        quantity=5 #number of entries to load per segment
+        
+        return Song.objects.filter()[(quantity*page):(quantity*(page+1))]
+    def get_context_data(self, **kwargs):
+       context = super(SongListViewPart, self).get_context_data(**kwargs) # get the default context data
+       #context['Title'] = "Song List"# add extra field to the context
+       if "page" not in self.kwargs.keys():    
+           context['page']=1 
+       else:
+           context['page']=self.kwargs['page']
+       return context    
+def SongListViewFragment(request):
+    template_name = "song_directory/list_view_fragment.html"
+    context={}
+    if 'page' in request.GET:
+        page=int(request.GET['page'])
+    else:
+        page=1
+    #print(page)
+    quantity=100 #number of entries to load per segment
+    
+    context["Song_list"]= Song.objects.filter()[(quantity*(page-1)):(quantity*(page))]
+    context["page"]=page
+    context["next_page"]=page+1
+    #print(context)
+    return render(request,template_name,context)
+    
+    
+    
    
 class SongSearchView(generic.ListView):
     template_name = "song_directory/list_view.html"
@@ -145,18 +188,24 @@ def ViewText(request,text):
     
 
 def ask_for_song(request):
-    if request.method == "POST":
-        form =SongForm(request.POST)
-        if form.is_valid():
-            new_song=Song(name=form["name"].value(),abc=form["abc"].value(),description=form["description"].value(),uploader=request.user)
-            new_song.save()
-            print(form)
-            
-            return redirect("song_directory:song_view",slug=Song.objects.get(pk=new_song.pk).url_code)
+    """Delievers Song Submission Form to user if they have the correct permission."""
+    if request.user.has_perm("song_directory.add_song"):
+        if request.method == "POST":
+            form =SongForm(request.POST)
+            if form.is_valid():
+                new_song=Song(name=form["name"].value(),abc=form["abc"].value(),description=form["description"].value(),uploader=request.user)
+                new_song.save()
+                print(form)
+                
+                return redirect("song_directory:song_view",slug=Song.objects.get(pk=new_song.pk).url_code)
+        else:
+            form = SongForm()
+        return render(request,"song_directory/new_song_form.html",{"form":form})
     else:
-        form = SongForm()
-    return render(request,"song_directory/song_form.html",{"form":form})
-            
+        return redirect("account_login")
+
+def confirm_submission(request):
+    return render(request,"song_directory/confirm_submission.html")
         
         
         

@@ -21,9 +21,13 @@ urlpatterns = [
     #path("song/<int:pk>",views.SongView.as_view(),name="song_view"),
     #path("song/<int:pk>/download/abc",views.getSongAbc,name="song_abc_download"),
     path("song/view/<slug:slug>",views.SongView.as_view(),name="song_view"),
+    path("song/view_more",views.SongListViewFragment,name="song_view_page"),
+    
     path("song/view/<slug:url_code>/download/abc",views.getSongAbc,name="song_abc_download"),
     path("song/search",views.SongSearchView.as_view(),name="song_search"),
     #path("song/<int:pk>/",views.getSongAbc,name="song_print"), #Currently unused
     path("about/",partial(views.ViewText,text=aboutText),name="about"),
     path("song/upload",views.ask_for_song,name="song_upload"),
+    
+    path("htmx/confirm_submission",views.confirm_submission,name="submit_clicked"),
 ]
