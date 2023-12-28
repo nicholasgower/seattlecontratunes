@@ -92,7 +92,7 @@ class SongListViewPart(generic.ListView):
        else:
            context['page']=self.kwargs['page']
        return context    
-def SongListViewFragment(request):
+def SongListViewFragment(request,model=Song):
     template_name = "song_directory/list_view_fragment.html"
     context={}
     if 'page' in request.GET:
@@ -102,13 +102,33 @@ def SongListViewFragment(request):
     #print(page)
     quantity=100 #number of entries to load per segment
     
-    context["Song_list"]= Song.objects.filter()[(quantity*(page-1)):(quantity*(page))]
+    context["Song_list"]= model.objects.filter()[(quantity*(page-1)):(quantity*(page))]
     context["page"]=page
     context["next_page"]=page+1
     #print(context)
     return render(request,template_name,context)
+def ForeverScrollView(request,model,model_name,quantity=100):
+    template_name = "song_directory/list_view_fragment.html"
+    context={}
+    if 'page' in request.GET:
+        page=int(request.GET['page'])
+    else:
+        page=1
+    #print(page)
     
+    #Get entries 0-5 of list, or 6-10, or 11-15, etc.
+    context[model_name]= model.objects.filter()[(quantity*(page-1)):(quantity*(page))]
     
+    #Add current page and next page to context
+    context["page"]=page
+    context["next_page"]=page+1
+    #print(context)
+    return render(request,template_name,context)
+def SongListForeverScroll(request):
+    return ForeverScrollView(request,Song,"Song_list",quantity=100)
+    
+def MedleyListForeverScroll(request):
+    return ForeverScrollView(request,Medley,"Medley_list",quantity=100)
     
    
 class SongSearchView(generic.ListView):
@@ -168,7 +188,9 @@ class SongView(generic.DetailView):
        
        
        return context
-       
+def displayUserInfo(request):
+    user=request.GET("user")
+          
     
    
 def getSongAbc(request,url_code):

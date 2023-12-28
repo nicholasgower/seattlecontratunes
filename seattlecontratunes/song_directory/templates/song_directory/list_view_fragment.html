@@ -4,10 +4,10 @@
 {% if Medley_list %}
     <ul>
     {% for medley in Medley_list %}
-        <li><a href="{{medley.url_code}}">{{ medley.Tune1 }} , {{ medley.Tune2 }}</a></li>
+        <li><a href='{%url "song_directory:medley_view" medley.url_code %}'>{{ medley.Tune1 }} , {{ medley.Tune2 }}</a></li>
     {% endfor %}
     </ul>
-
+    <div hx-get="{%url 'song_directory:medley_view_page' %}?page={{next_page}}" hx-trigger="revealed" hx-swap="outerHTML"></div>
 {% elif Song_list %}
     
 
@@ -19,7 +19,7 @@
     
     
     </ul>
-    <div hx-get="{%url 'song_directory:song_view_page' %}?page={{next_page}}" hx-trigger="revealed" hx-swap="outerHTML"> Get more  </div>
+    <div hx-get="{%url 'song_directory:song_view_page' %}?page={{next_page}}" hx-trigger="revealed" hx-swap="outerHTML">   </div>
     
     
 

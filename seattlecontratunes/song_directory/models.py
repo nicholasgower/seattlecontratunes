@@ -7,7 +7,7 @@ from django.utils import timezone
 import datetime
 from django.contrib.auth.models import User
 from uuid import uuid4
-
+from django.contrib.auth.models import AbstractUser
 
 
 medley_categories=[
@@ -19,6 +19,12 @@ medley_categories=[
     ("Northumbrian Pipe and Fiddle","Northumbrian Pipe and Fiddle")
 
     ]
+
+#class User(AbstractUser):
+#    pass
+
+
+
 
 class Version(models.Model):
     major=models.IntegerField(default=0)
@@ -50,7 +56,14 @@ class Version(models.Model):
 #class CommentLike(models.Model):
 #    user=models.ForeignKey(, on_delete=models.CASCADE)
 
+
+
 class Song(models.Model):
+    '''Model for Song object. On the website, these are called tunes, but due to an initial
+    misunderstanding of the differences between tunes and songs, they are called "songs" in
+    the source code
+    '''
+    
     url_code=models.UUIDField(default=uuid4)
     name=models.CharField(max_length=200)
     description=models.CharField(max_length=4000,blank=True)
@@ -67,10 +80,13 @@ class Song(models.Model):
     #def was_published_recently(self):
     #    now=timezone.now()
     #    return now - datetime.timedelta(days=1) <= self.pub_date <= now
-    def is_fakebook(self,id):
-        self_abc=self.get(id=id).abc
-        return 
+    #def is_fakebook(self,id):
+    #    self_abc=self.get(id=id).abc
+    #    return 
+    
+    
     class Meta:
+        
         permissions=[("can_delete_own_song","Can delete songs uploaded by self")]
     #def findSongs(search):
     #    return super().objects.filter(name__contains=search)
@@ -80,9 +96,17 @@ class Song(models.Model):
         next_newline=self_abc.index("\n",clef_index+1)
         injection=" clef={}".format(clef)
         return "".join((self_abc[:next_newline],injection,self_abc[next_newline:]))
+
+
+
         
     
 class Medley(models.Model):
+    ''' 
+    Model representing a medley of 2-3 tunes played during a particular dance.
+    '''
+    
+    
     url_code=models.UUIDField(default=uuid4)
     Tune1=models.CharField(max_length=200)
     Tune2=models.CharField(max_length=200,blank=True, default="")
@@ -115,4 +139,5 @@ class Medley(models.Model):
             links=Song.objects.filter(name__contains=tune.strip())
             out.append(links)
         return out
-            
+ 
+           
