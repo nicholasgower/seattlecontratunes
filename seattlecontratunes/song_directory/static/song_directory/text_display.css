@@ -25,6 +25,11 @@ body {
   a:hover {
     text-decoration: underline;
   }
+
+  .warning {
+    color: rgb(255, 0, 0);
+
+  }
   
   /* Add more styles as needed for different elements */
   
