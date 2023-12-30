@@ -24,6 +24,9 @@
     
 
     <div class="content">
+        <div class="upload-header-button">
+            <a href = '{%url "song_directory:song_upload" %}'> Upload</a>
+        </div> 
         <div class="account-info">
             {% if user.id is None %}
              <a href = '{%url "account_login" %}'>Login</a>
@@ -35,9 +38,8 @@
 
         </div> 
 
-        <div class="upload-button">
-            <a href = '{%url "song_directory:song_upload" %}'>
-        </div>
+        
+
         {% block content %}
 
         {% endblock %}
