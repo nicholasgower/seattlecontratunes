@@ -57,7 +57,20 @@ class Version(models.Model):
 #    user=models.ForeignKey(, on_delete=models.CASCADE)
 
 
-
+from .constants.report_choices import report_choices #Reasons why someone might report content.
+class Report(models.Model):
+    '''Model that stores reports of rule violations from user.'''
+    name=models.CharField(max_length=128)
+    url=models.CharField(max_length=128)
+    reason=models.CharField(choices=report_choices,max_length=128)
+    elaboration=models.CharField(max_length=4000)
+    email=models.EmailField()
+    submitted_time=models.DateTimeField(default=timezone.now)
+    
+    uploader=models.ForeignKey(User, on_delete=models.SET_NULL,blank=True,null=True)
+    resolved=models.bool(default=False)
+    def __str__(self):
+        return "From: {}, Reason:{}, Time:{}".format(self.name,self.reason,self.submitted_time)
 class Song(models.Model):
     '''Model for Song object. On the website, these are called tunes, but due to an initial
     misunderstanding of the differences between tunes and songs, they are called "songs" in
@@ -69,7 +82,7 @@ class Song(models.Model):
     description=models.CharField(max_length=4000,blank=True)
     abc=models.CharField(max_length=4000)
     
-    uploaded_time=models.DateTimeField(default=datetime.datetime.now())
+    uploaded_time=models.DateTimeField(default=timezone.now)
     #likes=models.IntegerField(default=0)
     uploader=models.ForeignKey(User, on_delete=models.CASCADE)
     
@@ -111,7 +124,10 @@ class Medley(models.Model):
     Tune1=models.CharField(max_length=200)
     Tune2=models.CharField(max_length=200,blank=True, default="")
     Tune3=models.CharField(max_length=200,blank=True,default="")
-    uploaded_time=models.DateTimeField(default=datetime.datetime.now())
+    
+    
+    
+    uploaded_time=models.DateTimeField(default=timezone.now)
     
     earliest_play=models.DateField(null=True,blank=True)
     latest_play=models.DateField(null=True,blank=True)
@@ -139,5 +155,8 @@ class Medley(models.Model):
             links=Song.objects.filter(name__contains=tune.strip())
             out.append(links)
         return out
+    def getTuneNames(id):
+        this=Medley.objects.get(id=id)
+        return [this.Tune1,this.Tune2,this.Tune3]
  
            

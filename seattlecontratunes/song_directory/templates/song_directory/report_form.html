@@ -1,0 +1,19 @@
+{% extends 'song_directory/base/base.html' %}
+{% load static %}
+{%block content%}
+
+
+<script type="text/javascript">
+   
+
+
+</script>
+<form action="{%url 'song_directory:report_form' %}" method="POST">
+
+    {% csrf_token %}
+    {{ form }} 
+    <!-- <input id="submitButton" type="submit" value="Submit"> -->
+    <input id="submitButton" type="submit" value="Submit">
+
+</form>
+{% endblock %}

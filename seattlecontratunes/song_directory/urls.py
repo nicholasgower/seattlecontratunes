@@ -32,7 +32,8 @@ urlpatterns = [
     #path("song/<int:pk>/",views.getSongAbc,name="song_print"), #Currently unused
     path("about/",partial(views.ViewText,text=aboutText),name="about"),
     
-    
+    path("report",views.ask_for_report,name="report_form"),
+    path("htmx/report_fragment",views.report_fragment,name="report_form_fragment"),
     
     path("htmx/confirm_submission",views.confirm_submission,name="submit_clicked"),
 ]

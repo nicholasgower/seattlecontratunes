@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
-from .models import Song, Medley
+from .models import Song, Medley, Report
 from django.shortcuts import render, Http404, get_object_or_404
 from django.urls import reverse
 from django.views import generic
@@ -9,7 +9,7 @@ from django.utils import timezone
 from django.shortcuts import redirect
 from django.http import FileResponse
 from django.db import connection
-from .forms import SongForm
+from .forms import SongForm, ReportForm
 
 from django.core.exceptions import PermissionDenied
 
@@ -226,8 +226,38 @@ def ask_for_song(request):
     else:
         return redirect("account_login")
 
+
 def confirm_submission(request):
     return render(request,"song_directory/confirm_submission.html")
+
+def report_fragment(request):
+    return render(request,"song_directory/report_form_snippet.html")
         
+def ask_for_report(request):
+    """Delievers Report Submission Form to user."""
+    if True:
+        if request.method == "POST":
+            form =ReportForm(request.POST)
+            if form.is_valid():
+                new_report=Report()
+                
+                    
+                new_report.name=form["name"].value()
+                new_report.url=form["url"].value()
+                new_report.reason=form["reason"].value()
+                new_report.elaboration=form["elaboration"].value()
+                new_report.email=form["email"].value()
+                new_report.uploader=request.user
+                #new_song=Song(name=form["name"].value(),abc=form["abc"].value(),description=form["description"].value(),uploader=request.user)
+                #new_song.save()
+                new_report.save()
+                print(form)
+                
+                return redirect("song_directory:index")
+        else:
+            form = ReportForm()
+        return render(request,"song_directory/report_form.html",{"form":form})
+    else:
+        return redirect("account_login")
         
         
