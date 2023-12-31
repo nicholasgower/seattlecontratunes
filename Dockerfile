@@ -16,4 +16,4 @@ EXPOSE $PORT
 
 # runs the production server
 ENTRYPOINT ["python", "seattlecontratunes/manage.py"]
-CMD ["runserver", "0.0.0.0:+${PORT}"]
+CMD ["runserver", "0.0.0.0:${PORT}"]
