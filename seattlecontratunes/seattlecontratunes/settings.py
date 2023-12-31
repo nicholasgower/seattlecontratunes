@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
+import warnings
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -33,6 +34,13 @@ try:
     ALLOWED_HOSTS.append(os.environ["PRODUCTION_HOST"])
 except KeyError:
     pass
+
+#For production, place the url in Environmental Variable "PRODUCTION_HOST"
+try:
+    ALLOWED_HOSTS.append(os.environ["RAILWAY_PUBLIC_DOMAIN"])
+except KeyError:
+    pass
+
 
 
 INTERNAL_IPS = ["localhost","127.0.0.1"]
@@ -198,13 +206,17 @@ if useEmail:
     # Email Server
     
     # Bottom of the file
-    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-    EMAIL_HOST = os.environ["EMAIL_HOST"]
-    EMAIL_PORT = 587
-    EMAIL_USE_TLS = True
-    EMAIL_HOST_USER = os.environ["EMAIL_HOST_USER"]
-    DEFAULT_FROM_EMAIL= os.environ["EMAIL_HOST_USER"]
-    EMAIL_HOST_PASSWORD = os.environ["EMAIL_HOST_PASSWORD"]
+    try:
+        EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+        EMAIL_HOST = os.environ["EMAIL_HOST"]
+        EMAIL_PORT = 587
+        EMAIL_USE_TLS = True
+        EMAIL_HOST_USER = os.environ["EMAIL_HOST_USER"]
+        DEFAULT_FROM_EMAIL= os.environ["EMAIL_HOST_USER"]
+        EMAIL_HOST_PASSWORD = os.environ["EMAIL_HOST_PASSWORD"]
+    except KeyError:
+        warnings.warn("No email server was defined. This server will be unable to verify email addresses. To set up email, define 'EMAIL_HOST','EMAIL_HOST_USER', and 'EMAIL_HOST_PASSWORD'")
+        
 
 
 
