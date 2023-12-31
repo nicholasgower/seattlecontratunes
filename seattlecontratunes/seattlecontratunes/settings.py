@@ -28,6 +28,12 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['localhost',"192.168.56.1","192.168.1.36","75.172.27.188"]
 
+#For production, place the url in Environmental Variable "PRODUCTION_HOST"
+try:
+    ALLOWED_HOSTS.append(os.environ["PRODUCTION_HOST"])
+except KeyError:
+    pass
+
 
 INTERNAL_IPS = ["localhost","127.0.0.1"]
 
