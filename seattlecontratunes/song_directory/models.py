@@ -68,7 +68,7 @@ class Report(models.Model):
     submitted_time=models.DateTimeField(default=timezone.now)
     
     uploader=models.ForeignKey(User, on_delete=models.SET_NULL,blank=True,null=True)
-    resolved=models.bool(default=False)
+    resolved=models.BooleanField(default=False)
     def __str__(self):
         return "From: {}, Reason:{}, Time:{}".format(self.name,self.reason,self.submitted_time)
 class Song(models.Model):
