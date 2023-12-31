@@ -15,5 +15,5 @@ WORKDIR /code
 EXPOSE 80
 
 # runs the production server
-ENTRYPOINT ["python", "mysite/manage.py"]
+ENTRYPOINT ["python", "seattlecontratunes/manage.py"]
 CMD ["runserver", "0.0.0.0:80"]
