@@ -12,8 +12,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . code
 WORKDIR /code
 
-EXPOSE 80
+EXPOSE $PORT
 
 # runs the production server
 ENTRYPOINT ["python", "seattlecontratunes/manage.py"]
-CMD ["runserver", "0.0.0.0:80"]
+CMD ["runserver", "0.0.0.0:$PORT"]
