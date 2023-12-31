@@ -5,7 +5,7 @@ Created on Fri Dec 29 14:57:17 2023
 @author: Nicholas
 """
 from .models import Song
-import scikit-learn
+#import scikit_learn
 from sklearn.ensemble import RandomForestClassifier
 
 
