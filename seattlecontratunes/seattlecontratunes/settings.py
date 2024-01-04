@@ -25,15 +25,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ["DJANGO_SECRET_KEY"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = bool(os.environ.get("DEBUG",0))
 
-ALLOWED_HOSTS = ['localhost',"192.168.56.1","192.168.1.36","75.172.27.188"]
+#ALLOWED_HOSTS = ['localhost',"192.168.56.1","192.168.1.36","75.172.27.188"]
+
+ALLOWED_HOSTS= os.environ.get("DJANGO_ALLOWED_HOSTS","localhost").split(" ")
 
 #For production, place the url in Environmental Variable "PRODUCTION_HOST"
-try:
-    ALLOWED_HOSTS.append(os.environ["PRODUCTION_HOST"])
-except KeyError:
-    pass
+#try:
+#    ALLOWED_HOSTS.append(os.environ["PRODUCTION_HOST"])
+#except KeyError:
+#    pass
 
 #For production, place the url in Environmental Variable "PRODUCTION_HOST"
 try:
@@ -43,7 +45,8 @@ except KeyError:
 
 
 
-INTERNAL_IPS = ["localhost","127.0.0.1"]
+#INTERNAL_IPS = ["localhost","127.0.0.1"]
+INTERNAL_IPS= os.environ.get("INTERNAL_IPS","localhost 127.0.0.1").split(" ")
 
 #ALLOWED_HOSTS = ["*"]
 
@@ -125,12 +128,23 @@ WSGI_APPLICATION = "seattlecontratunes.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+#DATABASES = {
+#    "default": {
+#        "ENGINE": "django.db.backends.sqlite3",
+#        "NAME": BASE_DIR / "db.sqlite3",
+#    }
+#}
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
+        "NAME": os.environ.get("SQL_DATABASE", BASE_DIR / "db.sqlite3"),
+        "USER": os.environ.get("SQL_USER", "user"),
+        "PASSWORD": os.environ.get("SQL_PASSWORD", "password"),
+        "HOST": os.environ.get("SQL_HOST", "localhost"),
+        "PORT": os.environ.get("SQL_PORT", "5432"),
     }
 }
+
 
 
 # Password validation
@@ -171,7 +185,7 @@ REST_FRAMEWORK = {
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = os.environ["TIME_ZONE"]
+TIME_ZONE = os.environ.get("TIME_ZONE","America/Los_Angeles")
 
 USE_I18N = True
 
