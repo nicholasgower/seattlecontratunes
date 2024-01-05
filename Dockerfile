@@ -18,6 +18,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . code
 WORKDIR /code
 
+ARG PORT
 EXPOSE $PORT
 
 # runs the production server
