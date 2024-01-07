@@ -20,6 +20,14 @@ Python version: 3.10.13
 
 "PORT"
 
+"DEBUG"
+
+"DJANGO_ALLOWED_HOSTS"
+
+"INTERNAL_IPS"
+
+"TIME_ZONE"
+
 More soon, when database is changed to Postgres
 
 
