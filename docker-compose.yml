@@ -3,27 +3,31 @@ version: '3.8'
 services:
   web:
     build: .
-    command: python seattlecontratunes/manage.py runserver 0.0.0.0:80
+    command: python seattlecontratunes/manage.py runserver 0.0.0.0:${PORT}
       
     ports:
-      - 80:80
-    env_file:
-      - ./.env.dev
-    depends_on:
-      - db
+      - ${PORT}:${PORT}
+    #env_file: .env.dev
+    #depends_on:
+      #- db
     secrets:
       - DJANGO_SECRET_KEY
+      - EMAIL_HOST
+      - EMAIL_HOST_USER
+      - EMAIL_HOST_PASSWORD
 
       
     
-  db:
-    image: postgres:15
-    ports:
-      - 5431:5431
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    env_file:
-      - ./.env.dev
+  #db:
+  #  image: postgres:15
+  #  ports:
+  #    - 5431:5431
+  #  volumes:
+  #    - postgres_data:/var/lib/postgresql/data
+  #  env_file:
+  #    - ./.env.dev
+  
+
     
 
 
@@ -32,9 +36,15 @@ volumes:
 
 secrets:
   DJANGO_SECRET_KEY:
-    file: ./DJANGO_SECRET_KEY.txt
-    #external: true
-    #name: "${DJANGO_SECRET_KEY}"
+    file: ./run/secrets/DJANGO_SECRET_KEY.txt
+  EMAIL_HOST:
+    file: ./run/secrets/EMAIL_HOST.txt
+  EMAIL_HOST_USER:
+    file: ./run/secrets/EMAIL_HOST_USER.txt
+  EMAIL_HOST_PASSWORD:
+    file: ./run/secrets/EMAIL_HOST_PASSWORD.txt
+  DB_PASSWORD:
+    file: ./run/secrets/DB_PASSWORD.txt  
 
   PORT:
     file: PORT.txt 

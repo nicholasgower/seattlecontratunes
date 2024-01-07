@@ -10,9 +10,23 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
+#To get Docker secrets, open the relevant text file containing the secret. All secrets are in /run/secrets
+
+
+
 from pathlib import Path
 import os
 import warnings
+
+
+secrets=Path("run/secrets")
+
+def getSecret(secret):
+    try:
+        with open(secrets / (secret + ".txt")) as file:
+            return file.read()
+    except:
+        return FileNotFoundError
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,11 +36,23 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+print("System Parameters:")
+for item in os.environ:
+    print(item,os.environ[item])
+#for path in secrets.rglob("*"):
+#    print(path)
+
 if "DJANGO_SECRET_KEY" in os.environ.keys():
     SECRET_KEY = os.environ["DJANGO_SECRET_KEY"]
 else:
-    warnings.warn("Warning: DJANGO_SECRET_KEY Undefined! Using default key of 'testing' ")
-    SECRET_KEY = "testing"
+    try:
+        with open(secrets / "DJANGO_SECRET_KEY.txt",'r') as file:
+            SECRET_KEY=file.read()
+    except FileNotFoundError:
+
+    
+        warnings.warn("Warning: DJANGO_SECRET_KEY Undefined! Using default key of 'testing' ")
+        SECRET_KEY = "testing"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(os.environ.get("DEBUG",0))
@@ -223,18 +249,30 @@ ACCOUNT_LOGOUT_REDIRECT_URL ='/accounts/login/'
 useEmail=True
 if useEmail:
     # Email Server
-    
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+        
+    EMAIL_PORT = 587
+    EMAIL_USE_TLS = True
     # Bottom of the file
+    
     try:
-        EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-        EMAIL_HOST = os.environ["EMAIL_HOST"]
-        EMAIL_PORT = 587
-        EMAIL_USE_TLS = True
-        EMAIL_HOST_USER = os.environ["EMAIL_HOST_USER"]
-        DEFAULT_FROM_EMAIL= os.environ["EMAIL_HOST_USER"]
-        EMAIL_HOST_PASSWORD = os.environ["EMAIL_HOST_PASSWORD"]
-    except KeyError:
-        warnings.warn("No email server was defined. This server will be unable to verify email addresses. To set up email, define 'EMAIL_HOST','EMAIL_HOST_USER', and 'EMAIL_HOST_PASSWORD'")
+        EMAIL_HOST = getSecret("EMAIL_HOST")
+    except FileNotFoundError:
+        warnings.warn("EMAIL_HOST undefined. This server will be unable to verify email addresses.")
+
+    try:
+        EMAIL_HOST_USER = getSecret("EMAIL_HOST_USER")
+        DEFAULT_FROM_EMAIL= getSecret("EMAIL_HOST_USER")
+    except FileNotFoundError:
+        warnings.warn("EMAIL_HOST_USER undefined. This server will be unable to verify email addresses.")
+    try:
+        EMAIL_HOST_PASSWORD = getSecret("EMAIL_HOST_PASSWORD")
+    except FileNotFoundError:
+        warnings.warn("EMAIL_HOST_PASSWORD undefined. This server will be unable to verify email addresses.")   
+        
+       
+    
+ 
         
 
 

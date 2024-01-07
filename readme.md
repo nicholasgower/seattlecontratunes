@@ -16,20 +16,28 @@ Python version: 3.10.13
 
     python manage.py runserver
 
+## .env
 
-## Private Keys
+"PORT"
+
+More soon, when database is changed to Postgres
+
+
+
+## Secrets
 
 Define the following system environment variables:
 
 "DJANGO_SECRET_KEY" : The Django secret key
-
-"TIME_ZONE" : The time zone that the server is in (Example: America/Los_Angeles)
 
 "EMAIL_HOST" : The SMTP email host for the server, to send automated emails. (Example: smtp.gmail.com)
 
 "EMAIL_HOST_USER" : email username
 
 "EMAIL_HOST_PASSWORD" : email password
+
+
+
 
 # Todo:
 

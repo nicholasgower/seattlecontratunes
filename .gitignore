@@ -162,4 +162,5 @@ cython_debug/
 seattlecontratunes/staticfiles/
 dontra db scrape/
 .env.dev
-secrets/
+run/secrets/
+secrets/*
