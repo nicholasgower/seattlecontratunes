@@ -57,6 +57,5 @@ secrets:
   DB_PASSWORD:
     file: ./run/secrets/DB_PASSWORD.txt  
 
-  PORT:
-    file: PORT.txt 
+  
 
