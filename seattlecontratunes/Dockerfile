@@ -14,12 +14,20 @@ ENV PYTHONUNBUFFERED 1
 COPY requirements.txt requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
+RUN mkdir /code/
+RUN mkdir /code/staticfiles
+
 # Mounts the application code to the image
 COPY . code
+
+
 WORKDIR /code
 
-ARG PORT
-EXPOSE $PORT
+
+
+
+#ARG 8000
+EXPOSE 8000
 
 # runs the production server
 #This section is obsolete: docker-compose.yml now starts the server.

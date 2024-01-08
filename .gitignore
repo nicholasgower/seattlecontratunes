@@ -163,4 +163,7 @@ seattlecontratunes/staticfiles/
 dontra db scrape/
 .env.dev
 run/secrets/
+seattlecontratunes/run/secrets/
 secrets/*
+.ppk
+*.ppk

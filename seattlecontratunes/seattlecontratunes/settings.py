@@ -30,18 +30,23 @@ def getSecret(secret):
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+#BASE_DIR_STATIC=Path(__file__).resolve().parent
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-print("System Parameters:")
-for item in os.environ:
-    print(item,os.environ[item])
+print_parameters=True
+if print_parameters:
+    print("System Parameters:")
+    for item in os.environ:
+        print(item,os.environ[item])
+    print("")
 #for path in secrets.rglob("*"):
 #    print(path)
 
+
+# SECURITY WARNING: keep the secret key used in production secret!
 if "DJANGO_SECRET_KEY" in os.environ.keys():
     SECRET_KEY = os.environ["DJANGO_SECRET_KEY"]
 else:
@@ -226,8 +231,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = "static/"
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = "/static/"
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 # STATIC_ROOT="C:\\Users\\Nicholas\\Documents\\seattlecontratunes_static"
 
 # Default primary key field type
