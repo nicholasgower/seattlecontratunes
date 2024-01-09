@@ -216,6 +216,19 @@ REST_FRAMEWORK = {
 
 
 
+#Source: https://stackoverflow.com/questions/72531015/how-to-exclude-certain-urls-from-django-debug-tool-bar
+#Necessary to prevent htmx requests from creating redundant toolbars on the page that block the first toolbar from interaction
+#Drawback: Htmx requests are not traceable on the debug toolbar.
+if DEBUG:
+    patterns = [
+        "/htmx/",
+    ]
+    DEBUG_TOOLBAR_CONFIG = {
+        'SHOW_TOOLBAR_CALLBACK': lambda request: not any(p in request.path for p in patterns),
+    }
+
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
