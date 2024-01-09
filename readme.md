@@ -32,7 +32,7 @@ More soon, when database is changed to Postgres
 
 ## Secrets
 
-Define the following system environment variables:
+Define the following system environment variables. In development, define them in your system's environmental variables. In Docker, define them by copying run/secrets_blank to run/secrets, and writing your secrets in their respective text file.
 
 "DJANGO_SECRET_KEY" : The Django secret key
 
