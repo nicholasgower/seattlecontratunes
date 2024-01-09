@@ -18,8 +18,6 @@ Python version: 3.10.13
 
 ## .env
 
-"PORT"
-
 "DEBUG"
 
 "DJANGO_ALLOWED_HOSTS"
