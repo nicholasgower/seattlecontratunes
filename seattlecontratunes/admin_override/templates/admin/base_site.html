@@ -1,0 +1,14 @@
+{% extends "admin/base_site.html" %}
+{%load static%}
+
+
+{% block extrastyle %}
+{{ block.super }} 
+ {% include "song_directory/base/base.html" %} 
+<link rel="stylesheet" type="text/css" media="all" href="{% static 'admin_override/css/nav.css' %}"> 
+
+{% endblock %}
+
+{% block header %}
+<!-- remove header -->
+{%endblock%}
