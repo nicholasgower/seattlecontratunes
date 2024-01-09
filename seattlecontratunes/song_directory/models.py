@@ -58,6 +58,7 @@ class Version(models.Model):
 
 
 from .constants.report_choices import report_choices #Reasons why someone might report content.
+from .constants.choices import item_availability_choices #Possible states of an item's availability.
 class Report(models.Model):
     '''Model that stores reports of rule violations from user.'''
     name=models.CharField(max_length=128)
@@ -69,22 +70,46 @@ class Report(models.Model):
     
     uploader=models.ForeignKey(User, on_delete=models.SET_NULL,blank=True,null=True)
     resolved=models.BooleanField(default=False)
+    
+    
+    
     def __str__(self):
         return "From: {}, Reason:{}, Time:{}".format(self.name,self.reason,self.submitted_time)
-class Song(models.Model):
-    '''Model for Song object. On the website, these are called tunes, but due to an initial
-    misunderstanding of the differences between tunes and songs, they are called "songs" in
-    the source code
-    '''
+
+
+
     
+class UserContent(models.Model):
+    """ Class representing a piece of user-uploaded content with a dedicated page
+     Rules of User-uploaded content: 
+       1. All content can be made public, private, or unlisted
+       2. Nothing the user deletes themselves should be deleted from the database.
+          It should only be hidden from non-admins.
+    """
     url_code=models.UUIDField(default=uuid4)
     name=models.CharField(max_length=200)
     description=models.CharField(max_length=4000,blank=True)
+    availability=models.CharField(choices=item_availability_choices,default="public",max_length=10)
+    uploader=models.ForeignKey(User, on_delete=models.CASCADE)
+
+
+class Song(models.Model):
+    '''Model for Song object. On the website, these are called tunes, but due to an initial
+    misunderstanding of the differences between tunes and songs, they are called "songs" in
+    the source code.
+    '''
+    url_code=models.UUIDField(default=uuid4)
+    name=models.CharField(max_length=200)
+    description=models.CharField(max_length=4000,blank=True)
+    availability=models.CharField(choices=item_availability_choices,default="public",max_length=10)
+    uploader=models.ForeignKey(User, on_delete=models.CASCADE)
+    
+    
     abc=models.CharField(max_length=4000)
     
     uploaded_time=models.DateTimeField(default=timezone.now)
     #likes=models.IntegerField(default=0)
-    uploader=models.ForeignKey(User, on_delete=models.CASCADE)
+    
     
     
     def __str__(self):
@@ -112,6 +137,35 @@ class Song(models.Model):
 
 
 
+    
+class SetListEntry(models.Model):
+    url_code=models.UUIDField(default=uuid4)
+    song_id=models.ForeignKey(Song,on_delete=models.CASCADE)
+    #SetList=models.ForeignKey(SetList,on_delete=models.CASCADE)
+    #previous=models.ForeignKey('self',blank=True,null=True,on_delete=models.SET_NULL)
+    next=models.ForeignKey('self',blank=True,null=True,on_delete=models.SET_NULL)
+    
+   # def __str__(self):
+   #     return Song.item.get(song_id)
+
+class SetList(models.Model):
+    """ Set lists are structured like a linked list: To reconstruct the setlist:
+        1. Get the root entry from SetList:
+        2. Get the next entry until next=null 
+        
+    """
+    url_code=models.UUIDField(default=uuid4)
+    name=models.CharField(max_length=200)
+    description=models.CharField(max_length=4000,blank=True)
+    availability=models.CharField(choices=item_availability_choices,default="public",max_length=10)
+    uploader=models.ForeignKey(User, on_delete=models.CASCADE)
+    uploaded_time=models.DateTimeField(default=timezone.now)
+    
+    
+    
+    root_entry=models.ForeignKey(SetListEntry,on_delete=models.CASCADE)
+    def __str__(self):
+        return "Set List: {}".format(super.name)
         
     
 class Medley(models.Model):
@@ -121,6 +175,7 @@ class Medley(models.Model):
     
     
     url_code=models.UUIDField(default=uuid4)
+    uploader=models.ForeignKey(User, on_delete=models.CASCADE)
     Tune1=models.CharField(max_length=200)
     Tune2=models.CharField(max_length=200,blank=True, default="")
     Tune3=models.CharField(max_length=200,blank=True,default="")
@@ -141,7 +196,10 @@ class Medley(models.Model):
     notes=models.CharField(max_length=4000,blank=True)
     additional_notes=models.CharField(max_length=4000,blank=True)
     medley_type=models.CharField(choices=medley_categories,max_length=200)
-    uploader=models.ForeignKey(User, on_delete=models.CASCADE)
+    
+    
+    
+    availability=models.CharField(choices=item_availability_choices,default="public",max_length=10)
     def __str__(self):
         return "{}, {}, {}".format(self.Tune1,self.Tune2,self.Tune3)
     class Meta:
