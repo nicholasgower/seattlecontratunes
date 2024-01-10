@@ -70,7 +70,11 @@ else:
         SECRET_KEY = "testing"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(os.environ.get("DEBUG",1))
+DEBUG_str=os.environ.get("DEBUG","True")
+
+DEBUG=DEBUG_str=="True"
+
+#DEBUG = bool(os.environ.get("DEBUG","True"))
 
 #ALLOWED_HOSTS = ['localhost',"192.168.56.1","192.168.1.36","75.172.27.188"]
 
