@@ -7,4 +7,5 @@ RUN rm /etc/nginx/conf.d/default.conf
 #RUN export PORT=${PORT}
 #RUN envsubst "\${PORT_DJANGO_INTERNAL},\${PORT}" < nginx.conf > /etc/nginx/conf.d
 ADD staticfiles /staticfiles
+ADD robots.txt /other/robots.txt
 COPY nginx.conf /etc/nginx/conf.d
