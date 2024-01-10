@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
-from .models import Song, Medley, Report
+from .models import Song, Medley, Report, SetList, SetListEntry
 from django.shortcuts import render, Http404, get_object_or_404
 from django.urls import reverse
 from django.views import generic
@@ -138,13 +138,19 @@ class SongSearchView(generic.ListView):
     title="Song_search"
     def get_search(self):
         return self.request.GET.get("search")
+    def get_user_search(self):
+        return self.request.GET.get("user")
     def get_queryset(self):
         search=self.get_search() #Get URL parameter
+        user_search=self.get_user_search()
         #print(search)
+        out=Song.objects
         if search:
-            out=Song.objects.filter(name__icontains=str(search))#[:100]
-        else:
-            out = Song.objects.none()
+            out=out.filter(name__icontains=str(search))#[:100]
+        if user_search:
+            out=out.filter(uploader=User.objects.get(username=str(user_search)))
+            
+        
         #out=Song.objects.all()
         #print(out)
         #print(connection.queries)
@@ -188,11 +194,38 @@ class SongView(generic.DetailView):
        
        
        return context
+"""   
 def displayUserInfo(request):
     user=request.GET("user")
-          
     
-   
+    song_count=Song.objects.filter(uploader=user.id).count()
+    SetList_count=SetList.objects.filter(uploader=user.id).count()
+    
+    context={"song_count":song_count,"user"SetList_count}
+    return HttpResponse(str(context))      
+"""
+class UserDetails(generic.DetailView):
+    template_name="song_directory/user_info.fragment.html"
+    model=User
+    slug_url_kwarg='slug'
+    slug_field="username"
+    context_object_name="other_user"
+    #song_count=Song.objects.filter(uploader=user.id).count()
+    #SetList_count=SetList.objects.filter(uploader=user.id).count()
+    
+    def get_context_data(self, **kwargs):
+       context = super(UserDetails, self).get_context_data(**kwargs) # get the default context data
+       context["object"].song_count = Song.objects.filter(uploader=context["object"].pk).filter(availability="public").count()
+       context["object"].medley_count = Medley.objects.filter(uploader=context["object"].pk).filter(availability="public").count()
+       print(context["object"].song_count)
+       print(context["object"])
+       for field in context["object"]._meta.get_fields():
+           print(field.name)
+           
+       #context["object"].uploader_name = User.objects.get(id=context["object"].uploader_id) # add extra field to the context
+       #context={"song_count":song_count,"user":SetList_count}
+       return context
+    
 def getSongAbc(request,url_code):
     
     song_object=get_object_or_404(Song, url_code=url_code)
