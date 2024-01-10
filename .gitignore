@@ -160,6 +160,7 @@ cython_debug/
 
 
 seattlecontratunes/staticfiles/
+seattlecontratunes/song_directory/migrations/
 dontra db scrape/
 .env.dev
 run/secrets/
@@ -167,3 +168,4 @@ seattlecontratunes/run/secrets/
 secrets/*
 .ppk
 *.ppk
+*.sqlite3

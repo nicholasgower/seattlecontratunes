@@ -7,9 +7,10 @@ services:
     command: gunicorn seattlecontratunes.wsgi:application --preload --bind 0.0.0.0:8000
     expose:
       - 8000:8000
-    #env_file: .env.dev
-    #depends_on:
-      #- db
+    env_file: 
+      - .env
+    depends_on:
+      - db
     secrets:
       - DJANGO_SECRET_KEY
       - EMAIL_HOST
@@ -17,6 +18,8 @@ services:
       - EMAIL_HOST_PASSWORD
     volumes:
       - static_volume:/staticfiles
+
+      
   nginx:
     build: ./nginx
     ports:
@@ -28,14 +31,19 @@ services:
 
       
     
-  #db:
-  #  image: postgres:15
-  #  ports:
-  #    - 5431:5431
-  #  volumes:
-  #    - postgres_data:/var/lib/postgresql/data
-  #  env_file:
-  #    - ./.env.dev
+  db:
+    image: postgres:15
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    env_file: 
+      - .env
+    #secrets:
+     # - SQL_PASSWORD
+     # - SQL_USER
+     # - SQL_HOST
+    
   
 
     
@@ -54,8 +62,12 @@ secrets:
     file: ./run/secrets/EMAIL_HOST_USER.txt
   EMAIL_HOST_PASSWORD:
     file: ./run/secrets/EMAIL_HOST_PASSWORD.txt
-  DB_PASSWORD:
-    file: ./run/secrets/DB_PASSWORD.txt  
+  SQL_HOST:
+    file: ./run/secrets/SQL_HOST.txt
+  SQL_USER:
+    file: ./run/secrets/SQL_USER.txt
+  SQL_PASSWORD:
+    file: ./run/secrets/SQL_PASSWORD.txt  
 
   
 

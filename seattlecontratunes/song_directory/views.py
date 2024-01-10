@@ -91,7 +91,8 @@ class SongListViewPart(generic.ListView):
            context['page']=1 
        else:
            context['page']=self.kwargs['page']
-       return context    
+       return context
+        
 def SongListViewFragment(request,model=Song):
     template_name = "song_directory/list_view_fragment.html"
     context={}
@@ -106,7 +107,10 @@ def SongListViewFragment(request,model=Song):
     context["page"]=page
     context["next_page"]=page+1
     #print(context)
-    return render(request,template_name,context)
+    if len(context["Song_list"])>0:
+        return render(request,template_name,context)
+    else:
+        return HttpResponseRedirect("song_directory:index")
 def ForeverScrollView(request,model,model_name,quantity=100):
     template_name = "song_directory/list_view_fragment.html"
     context={}

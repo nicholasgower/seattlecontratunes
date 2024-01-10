@@ -17,13 +17,22 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 import os
 import warnings
+from os.path import exists
 
 
-secrets=Path("run/secrets")
+
+secrets=Path("/run/secrets")
+#print(secrets)
 
 def getSecret(secret):
     try:
-        with open(secrets / (secret + ".txt")) as file:
+        with open(secrets / (secret )) as file:
+            return file.read()
+    except:
+        return FileNotFoundError
+def getSecret2(secret,default):
+    try:
+        with open(secrets / (secret )) as file:
             return file.read()
     except:
         return FileNotFoundError
@@ -33,6 +42,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 #BASE_DIR_STATIC=Path(__file__).resolve().parent
 
 
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
@@ -40,10 +50,10 @@ print_parameters=True
 if print_parameters:
     print("System Parameters:")
     for item in os.environ:
-        print(item,os.environ[item])
+        print(item)#,os.environ[item])
     print("")
-#for path in secrets.rglob("*"):
-#    print(path)
+for path in secrets.rglob("*"):
+    print(path)
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
@@ -51,7 +61,7 @@ if "DJANGO_SECRET_KEY" in os.environ.keys():
     SECRET_KEY = os.environ["DJANGO_SECRET_KEY"]
 else:
     try:
-        with open(secrets / "DJANGO_SECRET_KEY.txt",'r') as file:
+        with open(secrets / "DJANGO_SECRET_KEY",'r') as file:
             SECRET_KEY=file.read()
     except FileNotFoundError:
 
@@ -174,13 +184,20 @@ DATABASES = {
 DATABASES = {
    "default": {
         "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
-        "NAME": os.environ.get("SQL_DATABASE", BASE_DIR / "db.sqlite3"),
-        "USER": os.environ.get("SQL_USER", "user"),
-        "PASSWORD": os.environ.get("SQL_PASSWORD", "password"),
-        "HOST": os.environ.get("SQL_HOST", "localhost"),
-        "PORT": os.environ.get("SQL_PORT", "5431"),
+        "NAME": os.environ.get("POSTGRES_DB", BASE_DIR / "db.sqlite3"),
+        "USER": os.environ.get("POSTGRES_USER", "user"),
+        "PASSWORD": os.environ.get("POSTGRES_PASSWORD", "password"),
+        "HOST": os.environ.get("POSTGRES_HOST", "localhost"),
+        "PORT": "5432" #os.environ.get("SQL_PORT", "5431"),
     }
 }
+print(DATABASES)
+#DATABASES["default"]["USER"]=getSecret2("SQL_USER", "user")
+#DATABASES["default"]["PASSWORD"]=getSecret2("SQL_PASSWORD", "password")
+#DATABASES["default"]["HOST"]=getSecret2("SQL_HOST", "localhost")
+
+
+
 
 
 
