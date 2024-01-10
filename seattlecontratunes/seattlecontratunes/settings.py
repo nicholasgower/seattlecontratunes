@@ -39,6 +39,9 @@ def getSecret2(secret,default):
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+NGINX= BASE_DIR.parent / "nginx"
+print(NGINX)
 #BASE_DIR_STATIC=Path(__file__).resolve().parent
 
 
@@ -267,7 +270,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = "/static/"
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = NGINX / 'staticfiles'
 # STATIC_ROOT="C:\\Users\\Nicholas\\Documents\\seattlecontratunes_static"
 
 # Default primary key field type
