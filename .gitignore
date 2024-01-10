@@ -160,6 +160,7 @@ cython_debug/
 
 
 seattlecontratunes/staticfiles/
+nginx/staticfiles/
 seattlecontratunes/song_directory/migrations/
 dontra db scrape/
 .env.dev
