@@ -30,11 +30,13 @@ urlpatterns = [
     path("tune/upload",views.ask_for_song,name="song_upload"),
     
     #path("song/<int:pk>/",views.getSongAbc,name="song_print"), #Currently unused
-    path("about/",partial(views.ViewText,text=aboutText),name="about"),
+    #path("about/",partial(views.ViewText,text=aboutText),name="about"),
+    path("about/",views.about_view,name="about"),
     
     path("report",views.ask_for_report,name="report_form"),
     
-    path("user/<slug:slug>",views.UserDetails.as_view(),name="user_details"),
+    path("htmx/user/<slug:other_user>",views.UserDetails.as_view(),name="user_details_fragment"),
+    path("user/<slug:slug>",views.UserDetailsPage,name="user_details"),
     
     
     path("htmx/report_fragment",views.report_fragment,name="report_form_fragment"),

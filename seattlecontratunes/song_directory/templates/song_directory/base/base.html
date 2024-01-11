@@ -31,7 +31,7 @@
             {% if user.id is None %}
              <a href = '{%url "account_login" %}'>Login</a>
             {% else %}
-            {{user}} 
+            <a href="{%url 'song_directory:user_details' user %}">{{user}} </a> 
             <br> <a href = '{%url "account_logout" %}'>Logout</a></br>
             
             {% endif %}

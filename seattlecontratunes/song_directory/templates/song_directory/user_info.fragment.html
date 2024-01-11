@@ -1,6 +1,6 @@
 <li> @{{other_user.username}} </li>
 {# <li> {{other_user.email}} </li> #}
-<li> Joined {{other_user.date_joined}} </li>
+<li> Joined {{other_user.date_joined.date}} </li>
 <li>  <a href="{%url 'song_directory:song_search' %}?user={{other_user.username}}   ">{{other_user.song_count }} public tunes </a> </li>
 <li>  <a href="{%url 'song_directory:song_search' %}?user={{other_user.username}}   "> {{other_user.medley_count }} public medleys </a> </li>
 <li> {{other_user.group}} </li>

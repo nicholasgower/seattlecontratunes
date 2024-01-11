@@ -1,0 +1,40 @@
+
+{% extends 'song_directory/base/base.html' %}
+<!--{% load static %}  -->
+
+
+{% block content %}
+<link rel="stylesheet" type="text/css" media="all" href="{% static 'song_directory/text_display.css' %}">
+<html lang="en"></html>
+<h2>About</h2>
+
+Contra Tunes seeks to help musicians plan their next jam session and share their plans with fellow musicians. <br>
+
+Upload your ABC-notation music and instantly share it with others.
+
+<h2>Credits</h2>
+
+Website by Nicholas Gower <br>
+Initial tune collection by Phil Katz
+
+<h2>Built with</h2>
+<h3>Frontend</h3>
+Interactivity: htmx <br>
+Sheet Music Display: abcjs <br>
+<h3>Backend</h3> 
+Framework: Django<br>
+Production Server: Gunicorn, Nginx<br>
+Database: PostgreSQL<br>
+User Authentication: Django-all-auth<br>
+<h3>Server</h3> 
+Web Host: AWS EC2<br>
+Email Host: Zoho<br>
+OS: Ubuntu<br>
+Container: Docker<br>
+
+
+
+
+
+<a href="https://github.com/nicholasgower/seattlecontratunes">Source Code</a> 
+{% endblock %}

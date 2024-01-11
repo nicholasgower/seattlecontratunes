@@ -229,6 +229,8 @@ class UserDetails(generic.DetailView):
        #context["object"].uploader_name = User.objects.get(id=context["object"].uploader_id) # add extra field to the context
        #context={"song_count":song_count,"user":SetList_count}
        return context
+def UserDetailsPage(request,slug):
+    return render(request,"song_directory/user_info.html")
     
 def getSongAbc(request,url_code):
     
@@ -244,7 +246,9 @@ def ViewText(request,text):
     context={"text":text}
     response=render(request,template,context)
     return response
-    
+
+def about_view(request):
+    return render(request,"song_directory/text_content/about.html")    
 
 def ask_for_song(request):
     """Delievers Song Submission Form to user if they have the correct permission."""

@@ -40,7 +40,8 @@
 
 
     <br></br>
-    <li> Uploaded by user {{song.uploader_name}} on {{song.uploaded_time}}</li>
+    <li> Uploaded by <a href="{%url 'song_directory:user_details' song.uploader_name %}">{{song.uploader_name}} </a> on {{song.uploaded_time.date}}</li>
+       
     <br></br>
     <button id="DownloadButton" class="float-left submit-button"> Download ABC </button>
     <br><br>
@@ -50,11 +51,15 @@
     <button id="ClefButtonTenor" class="float-left submit-button"> Change Clef to Tenor </button>
     <button id="ClefButtonAlto" class="float-left submit-button"> Change Clef to Alto </button>
     <button id="ClefButtonTreble" class="float-left submit-button"> Change Clef to Treble </button>
+    Keyboard: QWER
     <br><br>
 
     
     <button id="OctaveDown" class="float-left submit-button"> Down Octave </button>
     <button id="OctaveUp" class="float-left submit-button"> Up Octave </button>
+    <button id="SemitoneDown" class="float-left submit-button"> Down Semitone </button>
+    <button id="SemitoneUp" class="float-left submit-button"> Up Semitone </button>
+    Keyboard: ASDF
 
     <div id="synthController"></div>
     <div id="target"></div>
@@ -138,7 +143,7 @@
                     
                 };
         }    
-
+    //Adding functionality to buttons
     document.getElementById("ClefButtonBass").onclick=changeClefButton("bass");
     document.getElementById("ClefButtonTenor").onclick=changeClefButton("tenor");
     document.getElementById("ClefButtonAlto").onclick=changeClefButton("alto");
@@ -146,7 +151,45 @@
 
     document.getElementById("OctaveDown").onclick=transpose(-12);
     document.getElementById("OctaveUp").onclick=transpose(12);
-    }
+    document.getElementById("SemitoneDown").onclick=transpose(-1);
+    document.getElementById("SemitoneUp").onclick=transpose(1);
+    
+    //Keyboard shortcuts
+    window.addEventListener("keydown",(event) => {
+        
+        switch(event.code){
+            case "KeyQ":
+                document.getElementById("ClefButtonBass").onclick();
+            break;
+            case "KeyW":
+                document.getElementById("ClefButtonTenor").onclick();
+            break;
+            case "KeyE":
+                document.getElementById("ClefButtonAlto").onclick();
+            break;
+            case "KeyR":
+                document.getElementById("ClefButtonTreble").onclick();
+            break;
+            case "KeyA":
+                document.getElementById("OctaveDown").onclick();
+            break;
+            case "KeyS":
+                document.getElementById("OctaveUp").onclick();
+            break;
+            case "KeyD":
+                document.getElementById("SemitoneDown").onclick();
+            break;
+            case "KeyF":
+                document.getElementById("SemitoneUp").onclick();
+            break;
+            default: 
+                break;
+        }
+        
+
+    })
+
+}
     /*
         
         
