@@ -14,9 +14,10 @@ var sleepSetTimeout_ctrl;
     
     let abcString = '{{song.abc|escapejs}}';
     abcString=abcString.replace("&quot;",'\"');
-    <!--alert(abcString)-->
-    <!--var abcString ="X:1\nT:Example\nK:Bb\nBcde|\n";-->
+    //alert(abcString)
+    //var abcString ="X:1\nT:Example\nK:Bb\nBcde|\n";
     window.onload= function(){
-        
-        ABCJS.renderAbc("target", abcString,{jazzchords:false});
+        const width=window.getComputedStyle(document.getElementById("abcjs-inline-audio")).getPropertyValue("max_width");
+        console.log(width);
+        ABCJS.renderAbc("target", abcString,{jazzchords:false,staffwidth:width});
     }

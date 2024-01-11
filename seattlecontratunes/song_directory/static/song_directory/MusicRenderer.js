@@ -64,7 +64,9 @@ class MusicRenderer{
     constructor(abc,target,synthControlTarget,program=41){
         // Renders both sheet music(in target) and playback controls(in synthControlTarget) using abc notation "abc."
         const enable_playback=true;
-        this.visualObj=ABCJS.renderAbc(target, abcString,{jazzchords:false});
+        const width= document.querySelector('body').offsetWidth;
+        //console.log(width);
+        this.visualObj=ABCJS.renderAbc(target, abcString,{jazzchords:false,staffwidth: width*0.92});
         this.program=program;
         this.synthControlTarget=synthControlTarget;
         this.target=target;
