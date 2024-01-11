@@ -99,8 +99,8 @@ class Song(models.Model):
     the source code.
     '''
     url_code=models.UUIDField(default=uuid4)
-    name=models.CharField(max_length=200)
-    description=models.CharField(max_length=4000,blank=True)
+    name=models.TextField(max_length=200)
+    description=models.TextField(max_length=4000,blank=True)
     availability=models.CharField(choices=item_availability_choices,default="public",max_length=10)
     uploader=models.ForeignKey(User, on_delete=models.CASCADE)
     

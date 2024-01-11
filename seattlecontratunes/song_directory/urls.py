@@ -35,8 +35,10 @@ urlpatterns = [
     
     path("report",views.ask_for_report,name="report_form"),
     
-    path("htmx/user/<slug:other_user>",views.UserDetails.as_view(),name="user_details_fragment"),
-    path("user/<slug:slug>",views.UserDetailsPage,name="user_details"),
+    path("htmx/user/@<slug:other_user>",views.UserDetails.as_view(),name="user_details_small_fragment"),
+    path("user/<slug:other_user>",views.UserDetailsPage.as_view()),
+    path("user/@<slug:other_user>",views.UserDetailsPage.as_view(),name="user_details"),
+    
     
     
     path("htmx/report_fragment",views.report_fragment,name="report_form_fragment"),

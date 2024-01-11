@@ -192,7 +192,13 @@ class SongView(generic.DetailView):
         return Song.objects.filter() #.order_by("-id")[:5]   
     def get_context_data(self, **kwargs):
        context = super(SongView, self).get_context_data(**kwargs) # get the default context data
+       #print(context["object"].abc.replace("\n","\\n"))
+       context["debug"]=False
        #print(context)
+       
+       #Using Windows-style line breaks will break escapejs filter.
+       #So we must replace Windows line breaks("\r\n") with Unix line breaks("\n")
+       context["object"].abc=context["object"].abc.replace("\r\n","\n")
        context["object"].uploader_name = User.objects.get(id=context["object"].uploader_id) # add extra field to the context
        
        
@@ -209,9 +215,9 @@ def displayUserInfo(request):
     return HttpResponse(str(context))      
 """
 class UserDetails(generic.DetailView):
-    template_name="song_directory/user_info.fragment.html"
+    template_name="song_directory/user_info_small.fragment.html"
     model=User
-    slug_url_kwarg='slug'
+    slug_url_kwarg='other_user'
     slug_field="username"
     context_object_name="other_user"
     #song_count=Song.objects.filter(uploader=user.id).count()
@@ -229,15 +235,19 @@ class UserDetails(generic.DetailView):
        #context["object"].uploader_name = User.objects.get(id=context["object"].uploader_id) # add extra field to the context
        #context={"song_count":song_count,"user":SetList_count}
        return context
-def UserDetailsPage(request,slug):
-    return render(request,"song_directory/user_info.html")
+class UserDetailsPage(UserDetails):
+    template_name="song_directory/user_info.html"
     
 def getSongAbc(request,url_code):
     
     song_object=get_object_or_404(Song, url_code=url_code)
     #print(song_object)
     filename="{}.abc".format(song_object.name)
-    response = HttpResponse(song_object.abc, content_type="text/plain")
+    
+    #Using Windows-style line breaks will break escapejs filter.
+    #So we must replace Windows line breaks("\r\n") with Unix line breaks("\n")
+    abc=song_object.abc.replace("\r\n","\n")
+    response = HttpResponse(abc, content_type="text/plain")
     response["content-Disposition"]='attachment; filename={0}'.format(filename)
     return response
 
