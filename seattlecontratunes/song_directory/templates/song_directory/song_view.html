@@ -7,6 +7,11 @@
 
 {% block content %}
 {% load static %}
+
+<meta name='twitter:site' content='@{{song.uploader_name}} on Contratunes' />
+<meta name='twitter:title' content='{{song.name}}' />
+<meta name='twitter:description' content='Example Webpage Description' />
+
 <link rel="stylesheet" type="text/css" media="all" href="{% static 'song_directory/abcjs-audio.css' %}">
 <html lang="en"></html>
 <head>
@@ -73,6 +78,7 @@
 
 
     {% if song.description != "" %}
+        <meta name='twitter:description' content='{{song.description}}' />
         <li> {{song.description}} </li> 
     {% endif %}
 

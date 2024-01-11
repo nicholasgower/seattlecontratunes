@@ -262,7 +262,7 @@ def about_view(request):
 
 def ask_for_song(request):
     """Delievers Song Submission Form to user if they have the correct permission."""
-    if request.user.has_perm("song_directory.add_song"):
+    if request.user.is_authenticated or request.user.has_perm("song_directory.add_song"):
         if request.method == "POST":
             form =SongForm(request.POST)
             if form.is_valid():
