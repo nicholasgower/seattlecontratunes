@@ -166,7 +166,9 @@ dontra db scrape/
 .env.dev
 run/secrets/
 seattlecontratunes/run/secrets/
+seattlecontratunes/node_modules
 secrets/*
 .ppk
 *.ppk
 *.sqlite3
+seattlecontratunes/static/index-bundle.js
