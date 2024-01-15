@@ -1,6 +1,6 @@
 beautifulsoup4==4.11.1
 Django==5.0 
-music21==9.1.0
+
 numpy==1.23.5
 pandas==1.5.3
 python_docx==1.1.0
@@ -17,3 +17,10 @@ psycopg==3.1.8
 
 
 gunicorn==21.2.0
+
+music21==9.1.0
+defusedxml ==0.7.1
+pyrealpro git+https://github.com/nicholasgower/pyrealpro@v0.2.1
+pyRealParser git+https://github.com/nicholasgower/pyRealParser
+
+cython==3.08

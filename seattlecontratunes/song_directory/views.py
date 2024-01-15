@@ -14,6 +14,8 @@ from .forms import SongForm, ReportForm
 from django.core.exceptions import PermissionDenied
 
 from django.contrib.auth.models import User
+
+from pyRealParser import Tune as iRealTune
 # Create your views here.
 
 
@@ -204,6 +206,15 @@ class SongView(generic.DetailView):
        
        
        return context
+   
+def iRealView(request):
+    iReal=request.GET.get("iReal")
+    """ Displays the contents of an iRealPro url."""
+    tune=iRealTune.parse_ireal_url(iReal)[0]
+    context={"tune":tune}
+    template="song_directory/iReal_view.html"
+    
+    return render(request,template,context)
 """   
 def displayUserInfo(request):
     user=request.GET("user")
@@ -310,5 +321,5 @@ def ask_for_report(request):
         return render(request,"song_directory/report_form.html",{"form":form})
     else:
         return redirect("account_login")
-        
+
         

@@ -39,7 +39,7 @@ urlpatterns = [
     path("user/<slug:other_user>",views.UserDetailsPage.as_view()),
     path("user/@<slug:other_user>",views.UserDetailsPage.as_view(),name="user_details"),
     
-    
+    path("iReal",views.iRealView,name="iReal_View"),
     
     path("htmx/report_fragment",views.report_fragment,name="report_form_fragment"),
     
