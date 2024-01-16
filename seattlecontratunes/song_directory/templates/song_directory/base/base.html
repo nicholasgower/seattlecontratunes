@@ -20,7 +20,7 @@
 <link rel="stylesheet" type="text/css" media="all" href="{% static 'song_directory/body_width_standard.css' %}"> 
 
 <body hx-header='{"X-CSRFToken": "{{ csrf_token }}"}"''>
-    
+    <script src="{%static 'song_directory/base_imports.js'%}" type="text/javascript"> </script>
     <div class="static-header">
     
         <a href ="{% url 'song_directory:index' %}"> <h1>Contra Tunes</h1> </a>
@@ -52,7 +52,7 @@
 
     </div>
 
-    <script src="{%static 'song_directory/base_imports.js'%}" type="text/javascript"> </script>
+    
 </body>
 
 </html>
