@@ -1,0 +1,17 @@
+.control-button{
+  position: relative;
+  height:0.6in;
+  width: 1.1in;
+  padding:0in 0in;
+  cursor: pointer;
+}
+.button-corner-label{
+    position:absolute;
+    bottom: 1px;
+    right: 1px;
+    
+}
+.control-button-container {
+    position: absolute;
+    margin: 20px;
+  }

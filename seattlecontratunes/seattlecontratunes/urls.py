@@ -26,10 +26,11 @@ from django.urls import include, path
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("",index,name="index"),
+    path("/",index,name="index"),
     path("api/user/",include("user_api.urls")),
     path("song_directory/", include("song_directory.urls")),
     path("favicon.ico",favicon),
     path("__debug__/",include("debug_toolbar.urls")),
     path("accounts/",include("allauth.urls")),
+    path("editor/",include("abctools.urls")),
 ]

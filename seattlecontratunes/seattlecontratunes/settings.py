@@ -124,6 +124,7 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    "abctools.apps.AbctoolsConfig"
    # 'allauth.socialaccount.providers.google',
     
 ]
