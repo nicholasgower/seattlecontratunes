@@ -1,0 +1,12 @@
+X: 1                    % Tune number. Don't change this line.
+T: New Tune             % Tune Title
+M: 4/4                  % Time signature
+L: 1/8                  % Base note length
+C: {user:<21}% Composer
+K: C clef=treble        % Change the key or clef here. 
+Q: 1/4=120              % Tempo
+% Example lines(C major scale):
+% C,4 D,2 E,2 | F,2  G,2 A,2 B,2|C4 D2 E2 | F2  G2 A2 B2 |
+% c4 d2 e2 | f2 g2 a2 b2 | c'4 |z8 |z8 |
+% Enter notes below:
+z8 |z8 |z8 |z8 |
