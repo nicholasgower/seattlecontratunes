@@ -1,3 +1,4 @@
+from http.client import HTTPResponse
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect, FileResponse
 from django.template import loader
@@ -12,6 +13,8 @@ from django.views.decorators.cache import cache_control
 from django.views.decorators.http import require_GET
 
 def index(request):
+
+    #return HTTPResponse("Test")
     return redirect("song_directory:index")    
 
 
