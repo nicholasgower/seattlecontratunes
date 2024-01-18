@@ -23,17 +23,17 @@
     <script src="{%static 'song_directory/base_imports.js'%}" type="text/javascript"> </script>
     <div class="static-header">
     
-        <a href ="{% url 'song_directory:index' %}"> <h1>Contra Tunes</h1> </a>
+        <a href ="{% url 'song_directory:index' %}"> <h1 class="header" id="title-header">Contra Tunes</h1> </a>
     
     </div>
     
     
 
     <div class="content">
-        <div class="upload-header-button">
+        <div class="upload-header-button header">
             <a href = '{%url "song_directory:song_upload" %}'> Upload</a>
         </div> 
-        <div class="account-info">
+        <div class="account-info header">
             {% if user.id is None %}
              <a href = '{%url "account_login" %}'>Login</a>
             {% else %}
