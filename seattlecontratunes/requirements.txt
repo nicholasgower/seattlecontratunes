@@ -20,7 +20,8 @@ gunicorn==21.2.0
 
 music21==9.1.0
 defusedxml ==0.7.1
-pyrealpro git+https://github.com/nicholasgower/pyrealpro@v0.2.1
-pyRealParser git+https://github.com/nicholasgower/pyRealParser
+pyrealpro @ git+https://github.com/nicholasgower/pyrealpro@v0.2.1
+pyRealParser @ git+https://github.com/nicholasgower/pyRealParser
 
-cython==3.08
+cython==3.0.8
+ 
