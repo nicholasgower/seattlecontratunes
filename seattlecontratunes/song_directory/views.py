@@ -10,7 +10,7 @@ from django.shortcuts import redirect
 from django.http import FileResponse
 from django.db import connection
 from .forms import SongForm, ReportForm 
-
+from django.conf import settings
 from django.core.exceptions import PermissionDenied
 
 from django.contrib.auth.models import User
@@ -283,8 +283,15 @@ def ask_for_song(request):
                 
                 return redirect("song_directory:song_view",slug=Song.objects.get(pk=new_song.pk).url_code)
         else:
-            form = SongForm()
-        return render(request,"song_directory/new_song_form.html",{"form":form})
+            context={}
+    
+            with open(settings.BASE_DIR / "abctools" / "tune_templates" / "new_tune.abc",'r') as file:
+                tune_autofill=file.read()
+                user=str(request.user)
+                context["tune_autofill"]=tune_autofill.format(user=user)
+            
+            context["form"]=SongForm()
+        return render(request,"abctools/abctools_contratunes.html",context)
     else:
         return redirect("account_login")
 
