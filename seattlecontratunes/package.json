@@ -4,6 +4,9 @@
   "description": "",
   "main": "webpack.config.js",
   "dependencies": {
+    "@capacitor/android": "^5.6.0",
+    "@capacitor/cli": "^5.6.0",
+    "@capacitor/core": "^5.6.0",
     "abcjs": "^6.2.3",
     "acorn": "^8.11.3",
     "acorn-import-assertions": "^1.9.0",

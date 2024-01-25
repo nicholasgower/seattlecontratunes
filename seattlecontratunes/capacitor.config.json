@@ -1,0 +1,8 @@
+{
+  "appId": "com.ContraTunes",
+  "appName": "Contra Tunes",
+  "webDir": "contratunes.nicholasgower.com",
+  "server": {
+    "androidScheme": "https"
+  }
+}
