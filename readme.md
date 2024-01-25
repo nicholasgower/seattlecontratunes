@@ -1,5 +1,6 @@
 # Setup Environment
 
+##Debug environment 
 Python version: 3.10.13
 
     git clone https://github.com/nicholasgower/seattlecontratunes.git
@@ -16,6 +17,10 @@ Python version: 3.10.13
 
     python manage.py runserver
 
+## Running Production Server with Docker
+
+The included Docker image is the recommended method of running this server in production.
+
 ## .env
 
 "DEBUG"
@@ -26,7 +31,7 @@ Python version: 3.10.13
 
 "TIME_ZONE"
 
-More soon, when database is changed to Postgres
+
 
 
 
