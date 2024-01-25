@@ -21,6 +21,14 @@ Python version: 3.10.13
 
 The included Docker image is the recommended method of running this server in production.
 
+    sudo bash build.sh
+
+or on Windows:
+
+    sudo bash build.ps1
+
+
+
 ## .env
 
 "DEBUG"
