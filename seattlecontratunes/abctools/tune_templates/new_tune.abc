@@ -1,9 +1,0 @@
-X: 1                    % Tune number. Don't change this line.
-T: New Tune             % Tune Title
-M: 4/4                  % Time signature
-L: 1/8                  % Base note length
-C: {user:<21}% Composer
-K: C clef=treble        % Change the key or clef here. 
-Q: 1/4=120              % Tempo
-% Enter notes below:
-z8 |z8 |z8 |z8 |

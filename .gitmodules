@@ -1,0 +1,3 @@
+[submodule "abctools"]
+	path=seattlecontratunes/abctools
+	url=https://github.com/nicholasgower/abctools-django
