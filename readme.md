@@ -23,9 +23,7 @@ The included Docker image is the recommended method of running this server in pr
 
     sudo bash build.sh
 
-or on Windows:
 
-    sudo bash build.ps1
 
 
 
