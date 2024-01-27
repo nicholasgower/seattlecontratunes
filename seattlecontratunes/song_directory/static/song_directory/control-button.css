@@ -2,9 +2,17 @@
   position: relative;
   height:0.6in;
   width: 1.1in;
-  padding:0in 0in;
+  padding:0in 0in 0in 0in;;
   cursor: pointer;
 }
+.row-button-group{
+  width: 100wh;
+  margin: 0px;
+  font-size: 0;
+  padding: 0px;
+  display: flex;
+}
+
 .button-corner-label{
     position:absolute;
     bottom: 1px;

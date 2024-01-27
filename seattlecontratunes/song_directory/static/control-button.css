@@ -1,5 +1,11 @@
 .control-button{
   height:0.5in;
   width: 1.1in;
-  padding:0in 0in;
+  padding: 0in 0in 0in 0in;
 }
+.row-button-group{
+  width: 100wh;
+  margin: 0px;
+  font-size:0;
+}
+

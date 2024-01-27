@@ -65,7 +65,7 @@ class MusicRenderer{
         // Renders both sheet music(in target) and playback controls(in synthControlTarget) using abc notation "abc."
         const enable_playback=true;
         const width= document.querySelector('body').offsetWidth;
-        //console.log(width);
+        console.log(width);
         this.visualObj=ABCJS.renderAbc(target, abcString,{jazzchords:false,staffwidth: width*0.92});
         this.program=program;
         this.synthControlTarget=synthControlTarget;
@@ -90,17 +90,19 @@ class MusicRenderer{
     }
     changeABC(abc){
         console.log(abc);
-        this.visualObj=ABCJS.renderAbc(this.target, abc,{jazzchords:false});
+        const width= document.querySelector('body').offsetWidth;
+        this.visualObj=ABCJS.renderAbc(target, abcString,{jazzchords:false,staffwidth: width*0.92});
         //this.setupSynth();
         //this.changeSynthTune();
 
     }
     
-    
+
 
     
 
 }
+
 //function renderMusic(abc,target,synthControlTarget){
     
 //}
