@@ -1,6 +1,6 @@
 # Setup Environment
 
-##Debug environment 
+## Debug environment 
 Python version: 3.10.13
 
     git clone https://github.com/nicholasgower/seattlecontratunes.git
@@ -23,9 +23,7 @@ The included Docker image is the recommended method of running this server in pr
 
     sudo bash build.sh
 
-or on Windows:
 
-    sudo bash build.ps1
 
 
 
