@@ -64,9 +64,13 @@ class MusicRenderer{
     constructor(abc,target,synthControlTarget,program=41){
         // Renders both sheet music(in target) and playback controls(in synthControlTarget) using abc notation "abc."
         const enable_playback=true;
-        const width= document.querySelector('body').offsetWidth;
-        console.log(width);
-        this.visualObj=ABCJS.renderAbc(target, abcString,{jazzchords:false,staffwidth: width*0.92});
+        this.changeABC(abc)
+        
+
+        //width=1000;
+        
+
+        
         this.program=program;
         this.synthControlTarget=synthControlTarget;
         this.target=target;
@@ -89,9 +93,23 @@ class MusicRenderer{
         return synthControl;
     }
     changeABC(abc){
-        console.log(abc);
-        const width= document.querySelector('body').offsetWidth;
-        this.visualObj=ABCJS.renderAbc(target, abcString,{jazzchords:false,staffwidth: width*0.92});
+        //console.log(abcString);
+        const body=document.querySelector('.content')
+        window.devicePixelRatio=1
+        const DPR= window.devicePixelRatio
+        console.log(body.offsetWidth,body.clientWidth,DPR)
+        
+        const width= body.clientWidth*0.95;
+        //const width=1400;
+        //let wrap_rules={ minSpacing: 2, maxSpacing: 2,lastLineLimit: true,preferredMeasuresPerLine: 4 }
+        let wrap_rules;
+        if (width<700){
+            wrap_rules={ minSpacing: 1.2, maxSpacing: 2.7,lastLineLimit: true };
+        }else{
+            wrap_rules=null;
+        }
+
+        this.visualObj=ABCJS.renderAbc(target, abcString,{jazzchords:false,staffwidth: width, wrap: wrap_rules });
         //this.setupSynth();
         //this.changeSynthTune();
 

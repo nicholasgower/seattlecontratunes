@@ -1,3 +1,6 @@
 [submodule "seattlecontratunes/abctools"]
 	path = seattlecontratunes/abctools
 	url = https://github.com/nicholasgower/abctools-django.git
+[submodule "seattlecontratunes/song_directory/static/song_directory/abcjs-contratunes"]
+	path = seattlecontratunes/song_directory/static/song_directory/abcjs-contratunes
+	url = https://github.com/nicholasgower/abcjs-contratunes.git

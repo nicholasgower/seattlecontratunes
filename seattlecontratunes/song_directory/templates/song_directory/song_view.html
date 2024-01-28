@@ -7,7 +7,7 @@
 
 {% block content %}
 {% load static %}
-
+ <meta name="viewport" content="width=device-width, initial-scale=1"> 
 <meta name='twitter:site' content='@{{song.uploader_name}} on Contratunes' />
 <meta name='twitter:title' content='{{song.name}}' />
 <meta name='twitter:description' content='Example Webpage Description' />
@@ -27,10 +27,11 @@
     
 
 
-    <script src="{% static 'song_directory/abcjs-basic.js' %}" type="text/javascript"></script>
+    <script src="{% static 'song_directory/abcjs-contratunes/dist/abcjs-basic.js' %}" type="text/javascript"></script>
     <script src="{% static 'song_directory/tune_manipulation/changedClef.js' %}" type="text/javascript"></script>
     <script src="{% static 'song_directory/MusicRenderer.js' %}" type="text/javascript"></script>
     <script src="{% static 'song_directory/tune_manipulation/getClef.js' %}" type="text/javascript"></script>
+    <script src="{% static 'song_directory/song_view/songViewOnResize.js' %}" type="text/javascript"></script>
     {#  <script src="{% static 'song_directory/tune_manipulation/reducePitchByOneOctave.js' %}" type="text/javascript"></script> #}
 
 
@@ -59,10 +60,10 @@
            </template>
            
             <div class="row button-group">
-                <button id="ClefButtonBass" class="control-button 4-wide"> Change Clef <br><font>𝄢</font><div class="button-corner-label">(Q)</div></button><!--
-                --><button id="ClefButtonTenor" class="control-button 4-wide"> Change Clef <br><font>𝄡_</font><div class="button-corner-label">(W)</div></button><!--
-                --><button id="ClefButtonAlto" class="control-button 4-wide"> Change Clef <br><font>𝄡-</font><div class="button-corner-label">(E)</div></button><!--
-                --><button id="ClefButtonTreble" class="control-button 4-wide"> Change Clef <br><font>𝄞</font><div class="button-corner-label">(R)</div></button>
+                <button id="ClefButtonBass" class="control-button 4-wide"><div class="change-clef"></div><font>𝄢</font><div class="button-corner-label">(Q)</div></button><!--
+                --><button id="ClefButtonTenor" class="control-button 4-wide"> <div class="change-clef"></div>  <font>𝄡_</font><div class="button-corner-label">(W)</div></button><!--
+                --><button id="ClefButtonAlto" class="control-button 4-wide"> <div class="change-clef"></div>  <font>𝄡-</font><div class="button-corner-label">(E)</div></button><!--
+                --><button id="ClefButtonTreble" class="control-button 4-wide"> <div class="change-clef"></div>  <font>𝄞</font><div class="button-corner-label">(R)</div></button>
 
             </div>
             
@@ -71,10 +72,10 @@
             
             <div class="row button-group">
 
-                <button id="OctaveDown" class="control-button 4-wide"><font>↓</font>  Octave <div class="button-corner-label">(A)</div></button><!--
-                --><button id="OctaveUp" class="control-button 4-wide"><font>↑</font> Octave <div class="button-corner-label">(S)</div></button><!--
-                --><button id="SemitoneDown" class="control-button 4-wide"><font>↓</font> Semitone <div class="button-corner-label">(D)</div></button><!--
-                --><button id="SemitoneUp" class="control-button 4-wide"><font>↑</font> Semitone <div class="button-corner-label">(F)</div></button>
+                <button id="OctaveDown" class="control-button 4-wide"><font>↓</font><span class="octave-text"></span><div class="button-corner-label">(A)</div></button><!--
+                --><button id="OctaveUp" class="control-button 4-wide"><font>↑</font><span class="octave-text"></span><div class="button-corner-label">(S)</div></button><!--
+                --><button id="SemitoneDown" class="control-button 4-wide"><font>↓</font> <span class="semitone-text"></span> <div class="button-corner-label">(D)</div></button><!--
+                --><button id="SemitoneUp" class="control-button 4-wide"><font>↑</font> <span class="semitone-text"></span> <div class="button-corner-label">(F)</div></button>
             </div>
             
 
@@ -82,7 +83,7 @@
         //Jquery css mods
         $(".4-wide").css({"width": "25%"});
         $(".button-group").css({"width":"100%"});
-        $(".control-button font").attr("size",6);
+        //$(".control-button font").attr("size",6);
     </script>
         
     
@@ -96,14 +97,16 @@
     <br>
     <button id="DownloadButton" class="float-left submit-button"> Download ABC </button>
 
-    <!--<li> {{song.abc|linebreaks}} </li>  -->
+    {#<li> {{song.abc|linebreaks}} </li> #}
 
 
     {% if song.description != "" %}
         <meta name='twitter:description' content='{{song.description}}' />
         <li> {{song.description}} </li> 
     {% endif %}
-
+    <br>
+    Availability: {{song.availability.title}}
+    <br>
     <a href="{%url 'song_directory:report_form' %}">Report Content</a> <br>
     <a href='{%url "song_directory:song_list" %}'>Go to song list</a>
 
@@ -127,6 +130,8 @@
 </script>
 
 <script type="text/javascript"> 
+    const pContent=document.querySelector('.content')
+
     const enable_playback=true;
     var sleepSetTimeout_ctrl;
 
@@ -195,6 +200,7 @@
         
         switch(event.code){
             case "KeyQ":
+                //$("#ClefButtonBass").onclick(); //This line in Jquery does not work.
                 document.getElementById("ClefButtonBass").onclick();
             break;
             case "KeyW":
@@ -223,12 +229,15 @@
         }
         
 
-    })
-    window.addEventListener("resize",(event) => {
-
-        renderer.changeABC(renderer.abcString); //Rerenders the sheet music at a new width
-        //Tbh, I don't know why this works. As far as I know, renderer.abcString is not a valid class variable.
     });
+    
+
+    window.addEventListener("resize",(event) => {
+        
+        songViewOnResize(renderer);
+
+    });
+    songViewOnResize(renderer);
 
 }
     /*
