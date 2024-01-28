@@ -181,7 +181,7 @@ class SongSearchView(generic.ListView):
 #    return render(request,template_name,context=)
 
 
-
+#Displays song as sheet music, and provides users with tools to change the music's appearance.
 class SongView(generic.DetailView):
     model=Song
     slug_url_kwarg='slug'
@@ -189,9 +189,7 @@ class SongView(generic.DetailView):
     template_name = "song_directory/song_view.html"
     context_object_name = "song"
     
-    def get_queryset(self):
-        """Return five randomly chosen medlies"""
-        return Song.objects.filter() #.order_by("-id")[:5]   
+     
     def get_context_data(self, **kwargs):
        context = super(SongView, self).get_context_data(**kwargs) # get the default context data
        #print(context["object"].abc.replace("\n","\\n"))
