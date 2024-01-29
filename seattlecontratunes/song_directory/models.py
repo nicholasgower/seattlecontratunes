@@ -105,7 +105,7 @@ class Song(models.Model):
     uploader=models.ForeignKey(User, on_delete=models.CASCADE)
     
     
-    abc=models.CharField(max_length=4000)
+    abc=models.CharField(max_length=12000)
     
     uploaded_time=models.DateTimeField(default=timezone.now)
     #likes=models.IntegerField(default=0)

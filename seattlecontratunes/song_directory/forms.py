@@ -1,11 +1,13 @@
 from django import forms
 
+from .constants.item_availability_choices import item_availability_choices
 class SongForm(forms.Form):
     #form_template_name = "song_form_snippet.html"
     name=forms.CharField(label="Name",max_length=200)
     #abc=forms.TextArea(label="ABC",max_length=4000)
-    abc=forms.CharField(label="ABC",max_length=4000,widget=forms.Textarea())
+    abc=forms.CharField(label="ABC",max_length=12000,widget=forms.Textarea())
     description=forms.CharField(label="Description",max_length=4000,required=False)
+    availability=forms.ChoiceField(label="Availability",choices=item_availability_choices)
     
     
 
