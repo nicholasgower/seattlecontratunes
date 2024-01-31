@@ -8,13 +8,19 @@
     {% endfor %}
     </ul>
     <div hx-get="{%url 'song_directory:medley_view_page' %}?page={{next_page}}" hx-trigger="revealed" hx-swap="outerHTML"></div>
+
+
 {% elif Song_list %}
     
 
 
     <ul>
     {% for entry in Song_list %}
-        <li><a href='{%url "song_directory:song_view" entry.url_code %}'>{{ entry.name }}</a></li>
+        <div class="song-entry">
+            <span class="entry-name"><a href='{%url "song_directory:song_view" entry.url_code %}'>{{ entry.name }}</a></span> |
+            <span class="uploader-name">{{entry.uploader.username}}</span> |
+            <span class="upload-date">{{entry.uploaded_time.date}}</span>
+        </div>
     {% endfor %}
     
     
