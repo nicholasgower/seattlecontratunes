@@ -108,6 +108,7 @@ class Song(models.Model):
     abc=models.CharField(max_length=12000)
     
     uploaded_time=models.DateTimeField(default=timezone.now)
+    edited_time=models.DateTimeField(blank=True,null=True)
     #likes=models.IntegerField(default=0)
     
     
@@ -134,6 +135,7 @@ class Song(models.Model):
         next_newline=self_abc.index("\n",clef_index+1)
         injection=" clef={}".format(clef)
         return "".join((self_abc[:next_newline],injection,self_abc[next_newline:]))
+
 
 
 

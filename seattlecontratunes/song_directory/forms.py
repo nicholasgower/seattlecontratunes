@@ -8,7 +8,13 @@ class SongForm(forms.Form):
     abc=forms.CharField(label="ABC",max_length=12000,widget=forms.Textarea())
     description=forms.CharField(label="Description",max_length=4000,required=False)
     availability=forms.ChoiceField(label="Availability",choices=item_availability_choices)
-    
+
+class SongEditForm(SongForm):
+    #form_template_name = "song_form_snippet.html"
+    name=None
+    #abc=forms.TextArea(label="ABC",max_length=4000)
+    #description=forms.CharField(label="Description",max_length=4000,required=False)
+    #availability=forms.ChoiceField(label="Availability",choices=item_availability_choices)    
     
 
 #Report choices taken from Youtube's report form    
