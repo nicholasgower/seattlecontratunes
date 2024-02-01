@@ -35,12 +35,13 @@
     {#  <script src="{% static 'song_directory/tune_manipulation/reducePitchByOneOctave.js' %}" type="text/javascript"></script> #}
 
 
-
-    <script type="text/javascript">
-        document.getElementById("DownloadButton").onclick = function () {
-            location.href = "{%url 'song_directory:song_abc_download' song.url_code%}";
-        };
-    </script>
+    {% if not external%}
+        <script type="text/javascript">
+            document.getElementById("DownloadButton").onclick = function () {
+                location.href = "{%url 'song_directory:song_abc_download' song.url_code%}";
+            };
+        </script>
+    {% endif %}
 
     
     
@@ -91,31 +92,39 @@
     
     <div id="synthController"></div>
     <div id="target"></div>
+    {% if not external %}
+        Uploaded by <a href="{%url 'song_directory:user_details' song.uploader_name %}">{{song.uploader_name}}</a>
+            {% if user_uploaded_song%}
+                (you)
+            {% endif %}
 
-    Uploaded by <a href="{%url 'song_directory:user_details' song.uploader_name %}">{{song.uploader_name}}</a>
-        {% if user_uploaded_song%}
-            (you)
+        on {{song.uploaded_time.date}} 
+        {% if song.edited_time %}
+            (Edited {{song.edited_time|date}})
         {% endif %}
 
-     on {{song.uploaded_time.date}} 
-    {% if user_uploaded_song%}
-        <a href="{%url 'song_directory:song_edit' song.url_code%}">Edit</a>
-    {%endif%}
-       
+        {% if user_uploaded_song%}
+            <a href="{%url 'song_directory:song_edit' song.url_code%}">Edit</a>
+        {%endif%}
+    {% else %}
+        This tune is not stored on Contra Tunes servers. It was downloaded from another source while loading the page.
+    {% endif %}   
     <br>
     <button id="DownloadButton" class="float-left submit-button"> Download ABC </button>
 
     {#<li> {{song.abc|linebreaks}} </li> #}
 
-
+    {% if not external %}
     {% if song.description != "" %}
         <meta name='twitter:description' content='{{song.description}}' />
         <li> {{song.description}} </li> 
     {% endif %}
     <br>
+    
     Availability: {{song.availability.title}}
     <br>
     <a href="{%url 'song_directory:report_form' %}">Report Content</a> <br>
+    {% endif %}   
     <a href='{%url "song_directory:song_list" %}'>Back to Tune List</a> <br>
 
     
@@ -133,9 +142,14 @@
         
     }
 
+{% if not external%}
     document.getElementById("DownloadButton").onclick = 
     button_redirect("{%url 'song_directory:song_abc_download' song.url_code%}");
 
+{%else %}
+    document.getElementById("DownloadButton").onclick = 
+    button_redirect("{{url}}");
+{% endif %}
 </script>
 
 <script type="text/javascript"> 
@@ -155,9 +169,15 @@
 
     const urlParams= thisURL.searchParams;
     var visualOptions = { responsive: 'resize' };
-    
-    let abcString = '{{song.abc|escapejs}}';
-    
+    {%if not external %}
+        let abcString = '{{song.abc|escapejs}}';
+    {% else %}
+        
+        
+       
+
+        let abcString = '{{song_code|escapejs}}';
+    {% endif %}
     //alert(abcString)
     //var abcString ="X:1\nT:Example\nK:Bb\nBcde|\n";
 
