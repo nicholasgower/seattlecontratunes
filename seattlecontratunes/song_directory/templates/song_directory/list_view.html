@@ -54,9 +54,10 @@
 
 {% elif Song_search %}
     <ul>
-    {% for entry in Song_search %}
-        <li><a href='{%url "song_directory:song_view" entry.url_code %}'>{{ entry.name }}</a></li>
-    {% endfor %}
+    
+        {% for entry in Song_search %}
+            <li><a href='{%url "song_directory:song_view" entry.url_code %}'>{{ entry.name }}</a></li>
+        {% endfor %}
     </ul>
 {% else %}
     <p>The database this page references is empty.</p>
