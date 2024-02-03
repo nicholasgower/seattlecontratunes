@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
-from .models import Song, Medley, Report, SetList, SetListEntry
+from ..models import Song, Medley, Report, SetList, SetListEntry
 from django.shortcuts import render, Http404, get_object_or_404
 from django.urls import reverse
 from django.views import generic
@@ -9,13 +9,26 @@ from django.utils import timezone
 from django.shortcuts import redirect
 from django.http import FileResponse
 from django.db import connection
-from .forms import SongForm, ReportForm 
+from ..forms import SongForm, SongEditForm, ReportForm 
 from django.conf import settings
 from django.core.exceptions import PermissionDenied
+import requests
+from urllib.request import urlopen
+from django.core.exceptions import ValidationError
+from django.core.files import File
+import os
+
 
 from django.contrib.auth.models import User
 
+from datetime import datetime
+
+
+
 from pyRealParser import Tune as iRealTune
+
+
+
 # Create your views here.
 
 
@@ -33,7 +46,8 @@ class MedleyView(generic.ListView):
     
 def Index(request):
     #return redirect("medley/")
-    return render(request,"song_directory/index.html")
+    #return render(request,"song_directory/index.html")
+    return redirect("song_directory:song_list")
 
 
         
@@ -58,119 +72,6 @@ class MedleyIndexView(generic.DetailView):
        return context
     
         
-class SongListView(generic.ListView):
-    template_name = "song_directory/list_view.html"
-    
-    context_object_name = "Song_list"
-    title="Song"
-    def get_queryset(self):
-        """Return 100  medleys"""
-        return Song.objects.filter()#[:100]
-    def get_context_data(self, **kwargs):
-       context = super(SongListView, self).get_context_data(**kwargs) # get the default context data
-       context['Title'] = "Song List"# add extra field to the context
-       return context
-
-class SongListViewPart(generic.ListView):
-    template_name = "song_directory/list_view_fragment.html"
-    
-    context_object_name = "Song_list"
-    title="Song"
-    def get_queryset(self):
-        
-        if "page" not in self.kwargs.keys():    
-            page=0
-        else:
-            page=self.kwargs['page']-1
-        print(self.kwargs)
-        quantity=5 #number of entries to load per segment
-        
-        return Song.objects.filter()[(quantity*page):(quantity*(page+1))]
-    def get_context_data(self, **kwargs):
-       context = super(SongListViewPart, self).get_context_data(**kwargs) # get the default context data
-       #context['Title'] = "Song List"# add extra field to the context
-       if "page" not in self.kwargs.keys():    
-           context['page']=1 
-       else:
-           context['page']=self.kwargs['page']
-       return context
-        
-def SongListViewFragment(request,model=Song):
-    template_name = "song_directory/list_view_fragment.html"
-    context={}
-    if 'page' in request.GET:
-        page=int(request.GET['page'])
-    else:
-        page=1
-    #print(page)
-    quantity=100 #number of entries to load per segment
-    
-    context["Song_list"]= model.objects.filter()[(quantity*(page-1)):(quantity*(page))]
-    context["page"]=page
-    context["next_page"]=page+1
-    #print(context)
-    if len(context["Song_list"])>0:
-        return render(request,template_name,context)
-    else:
-        return HttpResponseRedirect("song_directory:index")
-def ForeverScrollView(request,model,model_name,quantity=100):
-    template_name = "song_directory/list_view_fragment.html"
-    context={}
-    if 'page' in request.GET:
-        page=int(request.GET['page'])
-    else:
-        page=1
-    #print(page)
-    
-    #Get entries 0-5 of list, or 6-10, or 11-15, etc.
-    context[model_name]= model.objects.filter()[(quantity*(page-1)):(quantity*(page))]
-    
-    #Add current page and next page to context
-    context["page"]=page
-    context["next_page"]=page+1
-    #print(context)
-    return render(request,template_name,context)
-def SongListForeverScroll(request):
-    return ForeverScrollView(request,Song,"Song_list",quantity=100)
-    
-def MedleyListForeverScroll(request):
-    return ForeverScrollView(request,Medley,"Medley_list",quantity=100)
-    
-   
-class SongSearchView(generic.ListView):
-    template_name = "song_directory/list_view.html"
-    
-    context_object_name = "Song_search"
-    title="Song_search"
-    def get_search(self):
-        return self.request.GET.get("search")
-    def get_user_search(self):
-        return self.request.GET.get("user")
-    def get_queryset(self):
-        search=self.get_search() #Get URL parameter
-        user_search=self.get_user_search()
-        #print(search)
-        out=Song.objects
-        if search:
-            out=out.filter(name__icontains=str(search))#[:100]
-        if user_search:
-            out=out.filter(uploader=User.objects.get(username=str(user_search)))
-            
-        
-        #out=Song.objects.all()
-        #print(out)
-        #print(connection.queries)
-        return out
-    def get_context_data(self, **kwargs):
-       context = super(SongSearchView, self).get_context_data(**kwargs) # get the default context data
-       
-       search=self.get_search()
-       
-       #tunes=Song.objects.
-       
-       context['Title'] = 'Search results for "{}"'.format(search)# add extra field to the context
-       context["search"] = search
-       return context   
 
 
 
@@ -181,7 +82,9 @@ class SongSearchView(generic.ListView):
 #    return render(request,template_name,context=)
 
 
-#Displays song as sheet music, and provides users with tools to change the music's appearance.
+    
+
+#Displays song as sheet music, and provides users with tools to change the music's appearance.    
 class SongView(generic.DetailView):
     model=Song
     slug_url_kwarg='slug'
@@ -194,17 +97,40 @@ class SongView(generic.DetailView):
        context = super(SongView, self).get_context_data(**kwargs) # get the default context data
        #print(context["object"].abc.replace("\n","\\n"))
        context["debug"]=False
-       #print(context)
+       
        
        #Using Windows-style line breaks will break escapejs filter.
        #So we must replace Windows line breaks("\r\n") with Unix line breaks("\n")
        context["object"].abc=context["object"].abc.replace("\r\n","\n")
        context["object"].uploader_name = User.objects.get(id=context["object"].uploader_id) # add extra field to the context
-       
-       
-       
+       context["user_uploaded_song"]= str(context["object"].uploader_name)==str(self.request.user)
+       print(context["object"].uploader_name)
+       print(str(self.request.user))
+       print(context)
        return context
-   
+
+def viewExternalSong(request):
+    url=request.GET.get("url")
+    try:
+        # Download the file from the given URL
+        response = urlopen(url)
+        file_content = response.read().decode('utf-8')
+
+        # Check if the file content is of text type
+        if not file_content.startswith(('')):
+            raise ValidationError("Invalid file type. Only text files are allowed.")
+
+        # Create a Django File object from the downloaded content
+        #file_name = os.path.basename(url)
+        #django_file = File(file_content, name=file_name)
+    except Exception as e:
+        # Handle exceptions accordingly
+        return HttpResponse(f"Error: {str(e)}", status=400)
+    
+
+
+    return render(request,"song_directory/song_view.html",{"song_code":file_content,"external":True,"debug":"False","url":url})
+
 def iRealView(request):
     iReal=request.GET.get("iReal")
     """ Displays the contents of an iRealPro url."""
@@ -260,11 +186,19 @@ def getSongAbc(request,url_code):
     response["content-Disposition"]='attachment; filename={0}'.format(filename)
     return response
 
-def ViewText(request,text):
+def TextView(request,text):
     template="song_directory/generic_text_display.html"
     context={"text":text}
     response=render(request,template,context)
     return response
+
+
+def license_view(request):
+    import sys
+    print(sys.path)
+    with open("song_directory/constants/LICENSE.txt","r") as file:
+        license_text=file.read()
+    return TextView(request,license_text)
 
 def about_view(request):
     return render(request,"song_directory/text_content/about.html")    
@@ -292,6 +226,44 @@ def ask_for_song(request):
         return render(request,"abctools/abctools_contratunes.html",context)
     else:
         return redirect("account_login")
+    
+def edit_song(request,url_code):
+    """Delivers Song Submission Form to user to edit an existing song"""
+    this_song=Song.objects.get(url_code=url_code)
+    
+    #print(this_song)
+    if (request.user==this_song.uploader) and (request.user.is_authenticated or request.user.has_perm("song_directory.add_song")):
+        if request.method == "POST":
+            print(this_song)
+            
+            form =SongEditForm(request.POST)
+            #print("form",form)
+            if form.is_valid():
+                this_song.abc=form["abc"].value()
+                this_song.description=form["description"].value()
+                this_song.availability=form["availability"].value()
+                this_song.edited_time=datetime.now()
+                this_song.save()
+                
+                return redirect("song_directory:song_view",slug=Song.objects.get(pk=this_song.pk).url_code)
+            else:
+                pass
+        else:
+            context={}
+            context["edit_mode"]=True
+            #context["tune_autofill"]=this_song.abc
+            context["song"]=this_song
+            context["tune_title"]=this_song.name
+            
+            
+            context["form"]=SongEditForm()
+            return render(request,"abctools/abctools_contratunes.html",context)
+    else:
+        response=render(request,"song_directory/errors/unauthorized.html")
+        response.status_code=403 # 403 forbidden
+        return response
+        return redirect("account_login")
+
 
 
 def confirm_submission(request):
@@ -327,4 +299,3 @@ def ask_for_report(request):
     else:
         return redirect("account_login")
 
-        

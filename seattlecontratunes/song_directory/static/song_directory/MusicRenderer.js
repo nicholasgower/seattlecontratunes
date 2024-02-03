@@ -109,7 +109,21 @@ class MusicRenderer{
             wrap_rules=null;
         }
 
-        this.visualObj=ABCJS.renderAbc(target, abcString,{jazzchords:false,staffwidth: width, wrap: wrap_rules });
+        this.visualObj=ABCJS.renderAbc(target, abcString,{jazzchords:false,staffwidth: width, wrap: wrap_rules, lineThickness:0.3,add_classes:true});
+
+        //Makes additional modifications to the sheet music's appearance.
+        //Default font size for extra text is 21. When width<740, scale the font proportionally so that text that would fit when width=740 fits on the screen.
+        const font_size_bottom_standard=21;
+        const font_size_composer_standard=19;
+        const width_standard=900;
+        if (width<width_standard){
+            $("svg g.abcjs-meta-bottom text.abcjs-extra-text").attr("font-size",width/width_standard*font_size_bottom_standard)
+            $("text.abcjs-composer").attr("font-size",width/width_standard*font_size_composer_standard)
+            $("text.abcjs-rhythm").attr("font-size",width/width_standard*font_size_composer_standard)
+        }
+
+
+        
         //this.setupSynth();
         //this.changeSynthTune();
 

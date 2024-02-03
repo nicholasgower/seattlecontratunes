@@ -5,4 +5,4 @@ Created on Sun Jan  7 14:47:20 2024
 @author: Nicholas
 """
 
-item_availability_choices=["public","unlisted","private"]
+item_availability_choices={"public":"Public","unlisted":"Unlisted","signin":"Sign in Required"}

@@ -1,0 +1,6 @@
+.popup{
+    visibility: hidden;
+    position: absolute;
+    right: 50vw;
+    top: 50vh;
+}

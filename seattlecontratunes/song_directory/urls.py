@@ -24,8 +24,11 @@ urlpatterns = [
     #path("song/<int:pk>",views.SongView.as_view(),name="song_view"),
     #path("song/<int:pk>/download/abc",views.getSongAbc,name="song_abc_download"),
     path("tune/view/<slug:slug>",views.SongView.as_view(),name="song_view"),
+    path("tune/view_external",views.viewExternalSong,name="song_view_external"),
     path("htmx/tune/view_more",views.SongListForeverScroll,name="song_view_page"),
     path("tune/view/<slug:url_code>/download/abc",views.getSongAbc,name="song_abc_download"),
+    path("tune/edit/<slug:url_code>",views.edit_song,name="song_edit"),
+
     path("tune/search",views.SongSearchView.as_view(),name="song_search"),
     path("tune/upload",views.ask_for_song,name="song_upload"),
     
@@ -45,5 +48,6 @@ urlpatterns = [
     
     path("htmx/confirm_submission",views.confirm_submission,name="submit_clicked"),
     
-    
+    path("license",views.license_view,name="license")
 ]
+

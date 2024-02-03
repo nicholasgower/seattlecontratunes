@@ -7,12 +7,12 @@
 <title> {{Title}} </title>
 </head>
 <body>
-<a> {{Title}} <a> <br></br>
+{# <a> {{Title}} <a> <br></br> #}
 
 
 
 {% if Medley_list or Song_list %}    
-<a href='{%url "song_directory:index" %}'>Return</a>
+{# <a href='{%url "song_directory:index" %}'>Return</a> #}
 {% endif %}
 
 
@@ -23,7 +23,7 @@
     </ul>
     <div hx-get="{%url 'song_directory:medley_view_page' %}?page=1" hx-trigger="revealed" hx-swap="outerHTML">  </div>
 {% elif Song_list %}
-    <br> </br>
+    
     <input type="search" id="song_search_input"> 
     <button id="search_button">Search Tunes</button>
 
@@ -54,9 +54,10 @@
 
 {% elif Song_search %}
     <ul>
-    {% for entry in Song_search %}
-        <li><a href='{%url "song_directory:song_view" entry.url_code %}'>{{ entry.name }}</a></li>
-    {% endfor %}
+    
+        {% for entry in Song_search %}
+            <li><a href='{%url "song_directory:song_view" entry.url_code %}'>{{ entry.name }}</a></li>
+        {% endfor %}
     </ul>
 {% else %}
     <p>The database this page references is empty.</p>

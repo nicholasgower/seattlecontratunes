@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 {% load static %}
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" type="text/css" media="all" href="{% static 'song_directory/header.css' %}"> 
 <link rel="stylesheet" type="text/css" media="all" href="{% static 'song_directory/control-button.css' %}"> 
 <head>
@@ -18,14 +19,17 @@
 
 <link rel="stylesheet" type="text/css" media="all" href="{% static 'song_directory/text_display_new.css' %}"> 
 <link rel="stylesheet" type="text/css" media="all" href="{% static 'song_directory/body_width_standard.css' %}"> 
+<link rel="stylesheet" type="text/css" media="all" href="{% static 'song_directory/popup.css' %}"> 
 
 <body hx-header='{"X-CSRFToken": "{{ csrf_token }}"}"''>
     <script src="{%static 'song_directory/base_imports.js'%}" type="text/javascript"> </script>
+    
     <div id ="static-header" class="static-header header">
         <div class="site-title header">
             <a href ="{% url 'song_directory:index' %}"> <h1 class="header" id="title-header">Contra Tunes</h1> </a>
-
         </div>    
+
+
         
         <div class="upload-header-button ">
             <a href = '{%url "song_directory:song_upload" %}'><div class="header"> Upload </div></a>
@@ -40,6 +44,16 @@
             
             {% endif %}
         </div> 
+
+        <!--Directories and About, from index.html-->
+        <span id="header-links" class="header-content ">
+            <div id="medley-list-link" class="header-content header"><a href='{%url "song_directory:medley" %}'><h3>Medleys</h3></a></div>
+            
+            <div id="song-list-link" class="header-content header"><a href='{%url "song_directory:song_list" %}'><h3>Tunes</h3></a></div>
+            
+            <div id="about-link" class="header-content header"><a href='{%url "song_directory:about" %}'><h3>About</h3></a></div>
+
+        </span>
     </div> 
 
         
@@ -47,7 +61,17 @@
 
         
     </div>
-    
+    <div class="popup-container" id="eula-pop-up">
+        <div class="popup-shadow"></div>
+        <div class="popup" >
+            
+            <div style="text-align: center">Hello World <br> </div>
+            <button id="eula-pop-up-button" class="button">I have agreed to the above conditions</button>
+
+            </div>
+            
+        
+    </div>
     
 
     <div class="content">
@@ -77,7 +101,10 @@
 
 </html>
 
+<!--Eula Signing code must be added after the html-->
+<script src="{%static 'song_directory/checkIfEulaSigned.js'%}" type="text/javascript"> </script>
 <script>
+    const pContent=document.querySelector('.content');
     var base_template_top_old=0;
     function moveHeader(){
         var header = document.querySelector(".site-title")
@@ -112,4 +139,34 @@
     }
     window.addEventListener("scroll", moveHeader);
     moveHeader()
+
+    window.addEventListener("resize",(event) => {
+            
+            HeaderOnResize();
+
+        });
+    HeaderOnResize();
+
+    function HeaderOnResize(){
+        
+        if (pContent.offsetWidth<650){
+            
+        }else{
+
+        }
+
+        if (pContent.offsetWidth<650){ //Changes the size of certain elements if on a phone
+            $("#title-header.header").css("font-size",12)
+            $("#header-links").css("left","0px")
+            $("#header-links").css("width","142px")
+            
+            
+        }else{
+            $("#title-header.header").css("font-size","")
+            $("#header-links").css("left","")
+            $("#header-links").css("width","")
+        }
+    }
+
+
 </script>

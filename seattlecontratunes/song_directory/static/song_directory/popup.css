@@ -1,0 +1,30 @@
+.popup{
+    
+    position: fixed;
+    top: 50%;
+    width:80vw;
+    height: 80vh;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    z-index: 2000;
+    border: 15px solid #e9d0ba;
+    background-color: white;
+    text-align: center;
+    border-radius: 5vh;
+    overflow: scroll;
+}
+.eula-container{
+    
+    
+}
+.popup-shadow{
+    position: fixed;
+    
+    top: 0vh;
+    left: 0vw;
+    width:100vw;
+    height: 100vh;
+    z-index: 1999;
+    background-color: black; 
+    opacity: 80%;
+}
