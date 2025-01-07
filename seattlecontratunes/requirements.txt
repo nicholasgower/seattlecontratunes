@@ -1,5 +1,5 @@
 beautifulsoup4==4.11.1
-Django==5.0 
+Django==5.0.9 
 
 numpy==1.23.5
 pandas==1.5.3
